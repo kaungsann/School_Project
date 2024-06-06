@@ -1,0 +1,78 @@
+body::-webkit-scrollbar {
+  display: none;
+}
+
+.icon-label {
+  font-size: var(--font_size_minus2);
+  font-weight: 500;
+  letter-spacing: normal;
+  margin: 0 0 0 10px;
+  line-height: 1em;
+  padding: 4px 6px 3px;
+  text-transform: capitalize;
+  position: relative;
+  top: -1px;
+  border-radius: 1px;
+  text-align: center;
+}
+
+.icon_sale {
+  background-color: #f8b046;
+  color: #ffffff;
+}
+
+.hot-box {
+  position: absolute;
+  top: 100%;
+  transform: translateY(5px);
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.arrow-down {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 5px solid #fca5a5; /* Adjust color to match the label's background */
+}
+
+.arrow-newdown {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 5px solid #fde047; /* Adjust color to match the label's background */
+}
+.nav-item {
+  position: relative;
+  transition: border-bottom 0.3s ease;
+}
+
+.nav-item:hover {
+  border-bottom: 2px solid #000; /* Adjust color as needed */
+}
+
+.nav-item:hover .hover-box {
+  display: block;
+}
+
+.hover-box {
+  display: none;
+  transition: opacity 0.3s ease;
+  opacity: 0;
+}
+
+.nav-item:hover .hover-box {
+  opacity: 1;
+}
