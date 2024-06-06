@@ -76,3 +76,31 @@ body::-webkit-scrollbar {
 .nav-item:hover .hover-box {
   opacity: 1;
 }
+/* App.css */
+
+.slider-container {
+  overflow: hidden;
+}
+
+.slide img {
+  width: 400px;
+  height: auto;
+}
+
+.underline-effect::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -1px; /* Adjust this to position the underline correctly */
+  width: 100%;
+  height: 5px; /* Adjust the height of the underline */
+  background-color: currentColor; /* Match the text color */
+  transform: scaleX(0);
+  transform-origin: bottom right;
+  transition: transform 0.3s ease;
+}
+
+.underline-effect:hover::after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}

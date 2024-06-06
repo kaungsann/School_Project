@@ -53,13 +53,13 @@ function Footer() {
             <Icon icon="el:hand-down" className="text-yellow-700 text-lg" />
           </h4>
 
-          <div className="flex">
+          <div className="">
             <input
               type="email"
               className="px-2 py-1.5 border-2"
               placeholder="enter your email"
             />
-            <button className="ml-2 px-4 py-1.5 bg bg-pink-200 text-white">
+            <button className="ml-2 px-4 py-1.5 bg bg-pink-300 text-white">
               Submit
             </button>
           </div>

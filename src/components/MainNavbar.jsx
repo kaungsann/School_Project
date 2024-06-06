@@ -14,6 +14,7 @@ import { useEffect, useState } from "react";
 
 const MainNavbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isFocused, setIsFocused] = useState(false);
 
   const handleScroll = () => {
     if (window.scrollY > 0) {
@@ -55,9 +56,11 @@ const MainNavbar = () => {
   //     });
   // };
 
+  console.log("focus is a", isFocused);
+
   return (
     <>
-      <div className="bg-[#FFFFFF]">
+      <div className="bg-[#FFFFFF] relative">
         <div className="flex justify-end">
           <CurrencyFlags />
           <Input
@@ -68,7 +71,54 @@ const MainNavbar = () => {
             labelPlacement="outside"
             className="max-w-sm md:max-w-md lg:w-96 ml-3 rounded-sm"
             endContent={<Icon icon="mdi:search" className="text-xl" />}
+            onFocus={() => setIsFocused(true)}
+            onBlur={() => setIsFocused(false)}
           />
+          {isFocused && (
+            <div className="absolute w-3/5 right-0 top-8 mt-2 rounded-md h-72 z-40 bg-white border border-gray-300 shadow-lg p-4">
+              <div className="flex">
+                <div className="w-72">
+                  <h5 className="underline-offset-8 text-md font-semibold	decoration-solid decoration-4">
+                    POPULAR SEARCHS
+                  </h5>
+                  <ul className="my-4">
+                    <li className="flex items-center px-3 py-2 rounded-md hover:bg-slate-100 cursor-pointer">
+                      <Icon icon="mdi:search" className="text-2xl" />
+                      <span className="ml-2 font-bold text-[#9333ea]">
+                        travel notebook
+                      </span>
+                    </li>
+                    <li className="flex items-center px-3 py-2 rounded-md hover:bg-slate-100 cursor-pointer">
+                      <Icon icon="mdi:search" className="text-2xl" />
+                      <span className="ml-2 font-bold text-[#9333ea]">
+                        bullet Journal
+                      </span>
+                    </li>
+                    <li className="flex items-center px-3 py-2 rounded-md hover:bg-slate-100 cursor-pointer">
+                      <Icon icon="mdi:search" className="text-2xl" />
+                      <span className="ml-2 font-bold text-[#9333ea]">
+                        Bullet Journal set
+                      </span>
+                    </li>
+                    <li className="flex items-center px-3 py-2 rounded-md hover:bg-slate-100 cursor-pointer">
+                      <Icon icon="mdi:search" className="text-2xl" />
+                      <span className="ml-2 font-bold text-[#9333ea]">
+                        Washi Tape
+                      </span>
+                    </li>
+                  </ul>
+                </div>
+                <div className="ml-6">
+                  <h5 className="underline-offset-8 text-md	decoration-solid decoration-4 font-semibold">
+                    PRODUCTS
+                  </h5>
+                  <h6 className="text-[#7c3aed] mt-4">
+                    Start typing for search results
+                  </h6>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
 
         <div className="flex justify-between my-4 cursor-pointer">
@@ -85,9 +135,9 @@ const MainNavbar = () => {
           </div>
         </div>
       </div>
-      <div className="py-4 sticky top-0 bg-[#FFFFFF]">
+      <div className="py-4 sticky top-0 bg-[#FFFFFF] z-30">
         {isScrolled && (
-          <div className="absolute right-8">
+          <div className="absolute right-8 cursor-pointer">
             <Icon icon="ant-design:shopping-outlined" className="text-3xl" />
             <span className="text-sm rounded-full px-2 py-1 bg-pink-100 font-semibold absolute -top-3 -right-3">
               5
@@ -101,18 +151,41 @@ const MainNavbar = () => {
           />
         )}
         <ul className="flex justify-center">
-          <li className="text-slate-600 font-bold text-md flex items-center cursor-pointer">
-            <span>All Categories</span>
+          <li className="text-md flex items-center cursor-pointer relative group">
+            <span className="text-slate-600 font-bold">All Categories</span>
             <span>
               <Icon
                 icon="bxs:hand-down"
                 className="text-lg text-yellow-500 ml-1.5"
               />
             </span>
-
-            <div className="hover-box hidden absolute bg-white shadow-lg p-4 top-full mt-2">
-              {/* Content of the box goes here */}
-              Additional Content
+            <div className="hidden absolute bg-white w-60 z-40 shadow-lg p-4 top-full mt-1 left-0 group-hover:block">
+              <ul>
+                <li className="text-md py-2 border-b-2 border-slate-200 hover:text-pink-400">
+                  Notebooks
+                </li>
+                <li className="text-md py-2 border-b-2 border-slate-200 hover:text-pink-400">
+                  Bullet Journals
+                </li>
+                <li className="text-md py-2 border-b-2 border-slate-200 hover:text-pink-400">
+                  Stamps
+                </li>
+                <li className="text-md py-2 border-b-2 border-slate-200 hover:text-pink-400">
+                  Washi Tape
+                </li>
+                <li className="text-md py-2 border-b-2 border-slate-200 hover:text-pink-400">
+                  Pencils Case
+                </li>
+                <li className="text-md py-2 border-b-2 border-slate-200 hover:text-pink-400">
+                  Bags
+                </li>
+                <li className="text-md py-2 border-b-2 border-slate-200 hover:text-pink-400">
+                  Pens
+                </li>
+                <li className="text-md py-2 border-b-2 border-slate-200 hover:text-pink-400">
+                  Stickers
+                </li>
+              </ul>
             </div>
           </li>
 
