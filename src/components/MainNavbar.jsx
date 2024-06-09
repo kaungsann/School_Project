@@ -20,12 +20,16 @@ import { Icon } from "@iconify/react";
 import CurrencyFlags from "./CurrencyFlags";
 import "../App.css";
 import { useEffect, useState } from "react";
+import SelectedItemsBox from "../components/SelectedItemsBox";
+import LoginForm from "./LoginForm";
 
 const MainNavbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
   const [subMenuOpen, setSubMenuOpen] = useState(null);
   const [seasonOpenBox, setSeasonOpenBox] = useState(null);
+  const [showSelectedBox, setShowSelectedBox] = useState(false);
+  const [boxAnimationClass, setBoxAnimationClass] = useState("");
 
   const handleScroll = () => {
     if (window.scrollY > 0) {
@@ -66,6 +70,23 @@ const MainNavbar = () => {
   //       console.log(err);
   //     });
   // };
+
+  // const handleCloseBox = () => {
+  //   setShowSelectedBox(false);
+  // };
+
+  const handleCloseBox = () => {
+    setBoxAnimationClass("close-animation"); // Add animation class
+    setTimeout(() => {
+      setShowSelectedBox(false);
+      setBoxAnimationClass(""); // Reset animation class
+    }, 300); // Match the timeout with the transition duration
+  };
+
+  const handleOpenBox = () => {
+    setBoxAnimationClass("open-animation");
+    setShowSelectedBox(true);
+  };
 
   const handleSubMenuOpen = (subMenu) => {
     setSubMenuOpen(subMenu);
@@ -150,7 +171,7 @@ const MainNavbar = () => {
 
         <div className="flex justify-between my-4 cursor-pointer">
           <img src={logo} alt="logoImg" className="w-60 h-6 ml-16" />
-          <div className="mr-12 flex items-center">
+          <div className="mr-12 flex items-center" onClick={handleOpenBox}>
             <Icon
               icon="ant-design:shopping-outlined"
               className="text-3xl mx-1.5"
@@ -164,7 +185,11 @@ const MainNavbar = () => {
       </div>
       <div className="py-4 sticky top-0 bg-[#FFFFFF] z-30 flex justify-center">
         {isScrolled && (
-          <div className="absolute right-8 cursor-pointer">
+          <div
+            className="absolute right-8 cursor-pointer"
+            // onClick={() => setShowSelectedBox(!showSelectedBox)}
+            onClick={handleOpenBox}
+          >
             <Icon icon="ant-design:shopping-outlined" className="text-3xl" />
             <span className="text-sm rounded-full px-2 py-1 bg-pink-100 font-semibold absolute -top-3 -right-3">
               5
@@ -422,7 +447,17 @@ const MainNavbar = () => {
             </Modal>
           </>
         )}
+
+        <div className="absolute right-40">
+          <LoginForm />
+        </div>
       </div>
+      {showSelectedBox && (
+        <SelectedItemsBox
+          handleClose={handleCloseBox}
+          animationClass={boxAnimationClass}
+        />
+      )}
     </>
   );
 };

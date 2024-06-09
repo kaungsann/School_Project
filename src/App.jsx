@@ -11,6 +11,7 @@ import PrivateRoute from "./components/PrivateRoute";
 
 import UnauthorizePage from "./pages/UnauthorizePage";
 import HomePage from "./pages/HeroPage";
+import PaymentPage from "./pages/PaymentPage";
 
 export default function App() {
   const routeConfig = [
@@ -18,9 +19,10 @@ export default function App() {
     { path: "/login", element: <LoginForm /> },
     { path: "/register", element: <RegisterForm /> },
     { path: "/401-unauthorized", element: <UnauthorizePage /> },
+    { path: "/payment", element: <PaymentPage /> },
     {
       path: "/",
-      element: <PrivateRoute roles={["admin", "superadmin"]} />,
+      element: <PrivateRoute roles={["superadmin"]} />,
       children: [
         // { path: "profile", element: <ProfilePage /> },
       ],
