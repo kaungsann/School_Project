@@ -36,7 +36,7 @@ function SelectedItemsBox({ handleClose, animationClass }) {
           </p>
         </div>
 
-        <div className="flex flex-col items-center mt-40">
+        {/* <div className="flex flex-col items-center mt-40">
           <h4 className="mb-4 text-slate-800 font-bold text-xl">
             Your Cart is Empty!
           </h4>
@@ -46,7 +46,7 @@ function SelectedItemsBox({ handleClose, animationClass }) {
           <button className="py-3 text-center bg-[#C98897] hover:opacity-75 text-white font-bold text-xl w-4/5 mx-auto rounded-md shadow-md">
             Shop Now
           </button>
-        </div>
+        </div> */}
 
         <div className="absolute bottom-6 left-0 right-0 w-11/12 mx-auto">
           <div className="flex justify-between items-center p-4 border-t-2 border-slate-400">
