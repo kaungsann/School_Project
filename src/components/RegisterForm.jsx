@@ -107,8 +107,8 @@ function RegisterForm({ closeBox, switchToLogin }) {
 }
 
 RegisterForm.propTypes = {
-  closeBox: PropTypes.func.isRequired,
-  switchToLogin: PropTypes.func.isRequired,
+  closeBox: PropTypes.func,
+  switchToLogin: PropTypes.func,
 };
 
 export default RegisterForm;

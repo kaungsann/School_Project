@@ -10,6 +10,7 @@ import CountTimer from "../components/CountTimer";
 import CardItems from "../components/CardItems";
 import currentMonth from "../assets/images/june.jpg";
 import Blogs from "../components/Blogs";
+import CardSlide from "../components/CardSlide";
 
 function HeroPage() {
   return (
@@ -18,6 +19,7 @@ function HeroPage() {
       <HeroImage />
       <CountTimer />
       <CardItems />
+      <CardSlide />
       <img src={currentMonth} alt="month" className="w-11/12 mx-auto my-6" />
       <Blogs />
       <div className="flex justify-evenly my-12">

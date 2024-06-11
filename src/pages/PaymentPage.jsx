@@ -11,9 +11,9 @@ function PaymentPage() {
           <img src={logo} alt="logo" className="w-80 h-8" />
           <Icon
             icon="ant-design:shopping-outlined"
-            className="text-3xl absolute right-20 text-pink-300 cursor-pointer"
+            className="text-3xl absolute right-20 text-pink-300 cursor-pointer mt-1"
           />
-          <div className="absolute right-40 mt-1">
+          <div className="absolute right-28 mt-1 border-r-2">
             <LoginForm />
           </div>
         </div>

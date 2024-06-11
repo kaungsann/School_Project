@@ -121,7 +121,9 @@ const MainNavbar = () => {
             endContent={<Icon icon="mdi:search" className="text-xl" />}
             onFocus={() => setIsFocused(true)}
             onBlur={() => setIsFocused(false)}
+            aria-label="Search Product Name"
           />
+
           {isFocused && (
             <div className="absolute w-3/5 right-0 top-8 mt-2 rounded-md h-72 z-40 bg-white border border-gray-300 shadow-lg p-4">
               <div className="flex">
@@ -174,8 +176,9 @@ const MainNavbar = () => {
           <div className="mr-12 flex items-center" onClick={handleOpenBox}>
             <Icon
               icon="ant-design:shopping-outlined"
-              className="text-3xl mx-1.5"
+              className="text-3xl text-slate-600 font-semibold"
             />
+
             <span>Shopping Cart</span>
             <span className="text-sm rounded-full px-2 py-1 bg-pink-100 font-semibold ml-2">
               5
@@ -188,9 +191,14 @@ const MainNavbar = () => {
           <div
             className="absolute right-8 cursor-pointer"
             // onClick={() => setShowSelectedBox(!showSelectedBox)}
+            aria-label="search-box"
             onClick={handleOpenBox}
           >
-            <Icon icon="ant-design:shopping-outlined" className="text-3xl" />
+            <Icon
+              icon="ant-design:shopping-outlined"
+              className="text-3xl text-slate-600 font-semibold"
+            />
+
             <span className="text-sm rounded-full px-2 py-1 bg-pink-100 font-semibold absolute -top-3 -right-3">
               5
             </span>
@@ -298,10 +306,12 @@ const MainNavbar = () => {
             }`}
             onMouseEnter={handleSeasonMenuOpen}
             onMouseLeave={handleSeasonMenuClose}
+            aria-label="seasonal-lunch"
           >
             <span className="text-slate-600 font-bold cursor-pointer text-md">
               Seasonal Launch
             </span>
+
             {seasonOpenBox && (
               <div className="absolute right-0 z-40 bg-white shadow-md p-6 top-10 left-0">
                 <section className="grid grid-cols-4 gap-8 w-full pt-4">
@@ -423,7 +433,10 @@ const MainNavbar = () => {
               <ModalContent>
                 {(onClose) => (
                   <>
-                    <ModalHeader className="flex flex-col gap-1">
+                    <ModalHeader
+                      className="flex flex-col gap-1"
+                      aria-label="filter-product"
+                    >
                       Filter By Products
                     </ModalHeader>
                     <ModalBody>
@@ -431,6 +444,7 @@ const MainNavbar = () => {
                         type="text"
                         variant="bordered"
                         placeholder="search product name ..."
+                        aria-label="search-product"
                       />
                     </ModalBody>
                     <ModalFooter>

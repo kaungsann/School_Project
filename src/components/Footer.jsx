@@ -59,7 +59,7 @@ function Footer() {
               className="px-2 py-1.5 border-2"
               placeholder="enter your email"
             />
-            <button className="ml-2 px-4 py-1.5 bg bg-pink-300 text-white">
+            <button className="ml-2 px-4 py-1.5 bg bg-[#C98897] text-white">
               Submit
             </button>
           </div>

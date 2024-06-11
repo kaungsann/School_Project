@@ -16,6 +16,7 @@ import { setCredentials } from "../features/authSlice";
 import { useLoginMutation } from "../services/authAPI";
 import { useDispatch } from "react-redux";
 import RegisterForm from "./RegisterForm";
+import { Icon } from "@iconify/react";
 
 function LoginForm() {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -50,7 +51,10 @@ function LoginForm() {
     <>
       {/* for login box */}
       <button onClick={() => onOpen()} className="flex justify-end">
-        login
+        <Icon
+          icon="iconamoon:lock-off-light"
+          className="text-3xl text-slate-600 font-semibold"
+        />
       </button>
 
       {/* for login box */}
@@ -84,6 +88,7 @@ function LoginForm() {
                       required: "email is required",
                     })}
                     placeholder="example@gmail.com"
+                    aria-labelledby="email"
                   />
                   <Input
                     type="password"
@@ -94,13 +99,19 @@ function LoginForm() {
                     })}
                     placeholder="enter your password"
                     className="mt-3"
+                    aria-labelledby="password"
                   />
 
                   <div className="flex justify-end mt-6">
-                    <Button color="danger" variant="light" onPress={onClose}>
+                    <Button
+                      aria-label="Close"
+                      color="danger"
+                      variant="light"
+                      onPress={onClose}
+                    >
                       Close
                     </Button>
-                    <Button type="submit" color="primary">
+                    <Button aria-label="submit" type="submit" color="primary">
                       Submit
                     </Button>
                   </div>
@@ -118,8 +129,9 @@ function LoginForm() {
                 <Link
                   href="#"
                   underline="create account here!"
+                  aria-label="create account"
                   className="text-sm"
-                  onClick={() => {
+                  onPress={() => {
                     onClose();
                     onRegisterOpen();
                   }}
@@ -134,7 +146,7 @@ function LoginForm() {
 
       {/* for register box */}
       <Modal size="xs" isOpen={isRegisterOpen} onClose={onRegisterClose}>
-        <ModalContent>
+        <ModalContent aria-label="register-form">
           {(onRegisterClose) => (
             <>
               <ModalHeader className="flex flex-col gap-1">
@@ -142,10 +154,6 @@ function LoginForm() {
               </ModalHeader>
               <ModalBody>
                 <RegisterForm
-                  // closeBox={() => {
-                  //   onRegisterClose();
-                  //   onOpen(); // Open login modal when register form closes
-                  // }}
                   closeBox={onRegisterClose}
                   switchToLogin={() => {
                     onRegisterClose();

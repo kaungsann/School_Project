@@ -1,6 +1,7 @@
 import shopPay from "../assets/images/shoppay.png";
 import payPay from "../assets/images/paypal.png";
-import googlePay from "../assets/images/gp.png";
+import { Icon } from "@iconify/react";
+
 import {
   Accordion,
   AccordionItem,
@@ -34,23 +35,20 @@ function PaymentForm() {
             <h5 className="text-md text-slate-500 text-center mb-4">
               Express checkout
             </h5>
-            <div className="flex justify-center">
+            <div className="flex justify-around">
               <img
                 src={shopPay}
                 alt="shoppay"
-                className="w-44 h-14 rounded-md shadow-md"
+                className="w-44 h-12 rounded-md shadow-md cursor-pointer"
               />
-              <img
-                src={payPay}
-                alt="shoppay"
-                className="w-44 h-14 rounded-md shadow-md bg-yellow-400 ml-4"
-              />
-
-              <img
-                src={googlePay}
-                alt="shoppay"
-                className="w-44 h-14 rounded-md shadow-md bg-white ml-4"
-              />
+              <div className="w-44 flex justify-center rounded-md items-center bg-black cursor-pointer">
+                <Icon icon="logos:google-pay" className="text-xl bg-black" />
+              </div>
+              <div className="w-44 flex justify-center rounded-md items-center bg-yellow-400 cursor-pointer">
+                <Icon icon="logos:paypal" className="text-xl" />
+                <span className="text-blue-800 text-xl font-bold">Pay</span>
+                <span className="text-cyan-600 text-xl font-bold">Pal</span>
+              </div>
             </div>
             <div className="flex items-center mt-4">
               <span className="bg-slate-700 w-full border-1 mr-3"></span>
@@ -59,7 +57,7 @@ function PaymentForm() {
             </div>
 
             <section>
-              <form className="p-4">
+              <form className="p-4 mb-20">
                 <label className="text-black font-semibold text-xl">
                   Content
                 </label>
@@ -85,7 +83,9 @@ function PaymentForm() {
                     isRequired
                     variant="bordered"
                     label="Country/Region"
+                    id="country"
                     className="w-full mt-3"
+                    aria-label="region"
                   >
                     {regions.map((re) => (
                       <SelectItem key={re.key}>{re.label}</SelectItem>
@@ -143,9 +143,10 @@ function PaymentForm() {
                       All transactions are secure and encrypted.
                     </p>
 
-                    <Accordion variant="splitted">
+                    <Accordion variant="splitted" aria-label="payBox">
                       <AccordionItem
                         key="1"
+                        aria-label="payBox1"
                         subtitle={
                           <div className="flex items-center justify-between">
                             <div className="flex justify-start items-center">
@@ -263,6 +264,7 @@ function PaymentForm() {
                       </div> */}
                       </AccordionItem>
                       <AccordionItem
+                        aria-label="payBox2"
                         key="2"
                         subtitle={
                           <div className="flex items-center justify-between">
@@ -279,7 +281,6 @@ function PaymentForm() {
                             </div>
                           </div>
                         }
-                        aria-label="Accordion 2"
                         className="bg-slate-300 text-center text-sm"
                       >
                         After clicking Pay with PayPal, you will be redirected
@@ -299,9 +300,10 @@ function PaymentForm() {
           </div>
         </div>
 
-        <div className="w-2/5 fixed top-48 right-0">
+        <div className="w-2/5 fixed h-screen right-0">
           <div className="w-96 ml-12">
-            <div className="flex justify-between items-center mt-20">
+            <div className="h-96 mt-6 bg-slate-200 rounded-md shadow-md overflow-y-scroll selectItems"></div>
+            <div className="flex justify-between items-center mt-4">
               <input
                 type="text"
                 placeholder="Discount code or gift card"
@@ -312,7 +314,7 @@ function PaymentForm() {
               </button>
             </div>
 
-            <div className="flex justify-between items-center mt-8">
+            <div className="flex justify-between items-center">
               <span className="text-md">Subtotal</span>
               <span className="text-md font-semibold text-black">$13.98</span>
             </div>
