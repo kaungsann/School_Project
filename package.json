@@ -2,7 +2,7 @@
   "name": "react-ecommerence",
   "private": true,
   "version": "0.0.0",
-  "author": "kaung sann",
+  "author": "khant kyaw",
   "type": "module",
   "scripts": {
     "dev": "vite",

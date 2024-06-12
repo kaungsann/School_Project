@@ -49,7 +49,7 @@ function Footer() {
 
         <div>
           <h4 className="text-md text-slate-800 mb-4 font-semibold">
-            Join for special updates & discounts{" "}
+            Join for special updates & discounts
             <Icon icon="el:hand-down" className="text-yellow-700 text-lg" />
           </h4>
 

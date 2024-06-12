@@ -1,6 +1,7 @@
 import shopPay from "../assets/images/shoppay.png";
 import payPay from "../assets/images/paypal.png";
 import { Icon } from "@iconify/react";
+import { calculateSubtotal } from "../utils/cartCountPrice";
 
 import {
   Accordion,
@@ -9,8 +10,11 @@ import {
   Select,
   SelectItem,
 } from "@nextui-org/react";
+import { useSelector } from "react-redux";
 
 function PaymentForm() {
+  const carts = useSelector((state) => state.cart);
+  console.log("cart  is a", carts);
   const regions = [
     { key: "United State", label: "US" },
     { key: "brunei", label: "Brunei" },
@@ -26,6 +30,8 @@ function PaymentForm() {
     { key: "vietnam", label: "Vietnam" },
     { key: "korea", label: "Korea" },
   ];
+
+  const subtotal = calculateSubtotal(carts);
 
   return (
     <>
@@ -57,7 +63,7 @@ function PaymentForm() {
             </div>
 
             <section>
-              <form className="p-4 mb-20">
+              <form className="p-4 mb-10">
                 <label className="text-black font-semibold text-xl">
                   Content
                 </label>
@@ -301,9 +307,41 @@ function PaymentForm() {
         </div>
 
         <div className="w-2/5 fixed h-screen right-0">
-          <div className="w-96 ml-12">
-            <div className="h-96 mt-6 bg-slate-200 rounded-md shadow-md overflow-y-scroll selectItems"></div>
-            <div className="flex justify-between items-center mt-4">
+          <div className="w-[400px] ml-12">
+            <div className="h-[450px] mt-3 bg-slate-100 rounded-md shadow-md overflow-y-scroll selectItems">
+              {carts.map((cart) => (
+                <div
+                  key={cart.id}
+                  className="flex justify-between items-center p-4 border-b-1"
+                >
+                  <div className="relative">
+                    <img
+                      src={cart.image}
+                      alt={cart.title}
+                      className="w-20 h-20"
+                    />
+                    <div className="bg-slate-500 w-8 h-8 flex justify-center items-center absolute -top-3 -right-6 p-2 rounded-full">
+                      <span className="text-white text-sm font-bold">
+                        {cart?.quantity}
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="w-3/5">
+                    <h2 className="text-slate-800 text-sm font-semibold">
+                      {cart.title}
+                    </h2>
+                  </div>
+
+                  <div className="flex flex-col items-center">
+                    <p className="text-slate-500 text-sm font-semibold">
+                      $ {cart.price * cart?.quantity}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className="flex justify-between items-center mt-6">
               <input
                 type="text"
                 placeholder="Discount code or gift card"
@@ -314,7 +352,7 @@ function PaymentForm() {
               </button>
             </div>
 
-            <div className="flex justify-between items-center">
+            {/* <div className="flex justify-between items-center">
               <span className="text-md">Subtotal</span>
               <span className="text-md font-semibold text-black">$13.98</span>
             </div>
@@ -322,15 +360,15 @@ function PaymentForm() {
             <div className="flex justify-between items-center mt-3">
               <span className="text-md">Shipping</span>
               <span className="text-md font-semibold text-black">$5.95</span>
-            </div>
+            </div> */}
 
-            <div className="flex justify-between items-center mt-3">
+            <div className="flex justify-between items-center mt-8">
               <span className="text-2xl">Total</span>
 
               <div>
                 <span className="text-slate-500 text-sm mr-2">USD</span>
                 <span className="text-2xl font-semibold text-black">
-                  $19.93
+                  $ $ {subtotal.toFixed(2)}
                 </span>
               </div>
             </div>

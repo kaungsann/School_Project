@@ -16,20 +16,24 @@ import {
   REGISTER,
 } from "redux-persist";
 import authReducer from "./features/authSlice";
+import cartReducer from "./features/cartSlice";
 
 import { authApi } from "./services/authAPI";
+import { productApi } from "./services/ProductApi";
 
 export const resetStore = createAction("RESET_STORE");
 
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: ["auth", "project"],
+  whitelist: ["auth", "product"],
 };
 
 const rootReducer = combineReducers({
   auth: authReducer,
+  cart: cartReducer,
   [authApi.reducerPath]: authApi.reducer,
+  [productApi.reducerPath]: productApi.reducer,
 });
 
 const resettableReducer = (state, action) => {
@@ -48,7 +52,7 @@ const store = configureStore({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
-    }).concat(authApi.middleware),
+    }).concat(authApi.middleware, productApi.middleware),
 });
 
 const persistor = persistStore(store);

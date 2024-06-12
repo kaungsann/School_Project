@@ -21,7 +21,9 @@ import CurrencyFlags from "./CurrencyFlags";
 import "../App.css";
 import { useEffect, useState } from "react";
 import SelectedItemsBox from "../components/SelectedItemsBox";
+
 import LoginForm from "./LoginForm";
+import { useSelector } from "react-redux";
 
 const MainNavbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -30,6 +32,7 @@ const MainNavbar = () => {
   const [seasonOpenBox, setSeasonOpenBox] = useState(null);
   const [showSelectedBox, setShowSelectedBox] = useState(false);
   const [boxAnimationClass, setBoxAnimationClass] = useState("");
+  const carts = useSelector((state) => state.cart);
 
   const handleScroll = () => {
     if (window.scrollY > 0) {
@@ -181,7 +184,7 @@ const MainNavbar = () => {
 
             <span>Shopping Cart</span>
             <span className="text-sm rounded-full px-2 py-1 bg-pink-100 font-semibold ml-2">
-              5
+              {carts?.length}
             </span>
           </div>
         </div>
@@ -200,7 +203,7 @@ const MainNavbar = () => {
             />
 
             <span className="text-sm rounded-full px-2 py-1 bg-pink-100 font-semibold absolute -top-3 -right-3">
-              5
+              {carts?.length}
             </span>
           </div>
         )}

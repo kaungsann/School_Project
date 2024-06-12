@@ -20,11 +20,11 @@ function CountTimer() {
               Summer in Italy items ✨
             </span>
           </p>
-          <img
+          {/* <img
             src="https://gen.sendtric.com/countdown/80s5eb2oyv"
             alt="countTime"
             className="my-4"
-          />
+          /> */}
         </div>
       </section>
     </>

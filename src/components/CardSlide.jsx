@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import data from "../utils/Images";
+import { Icon } from "@iconify/react";
 
 function CardSlide() {
   const slideImg = [
@@ -54,26 +55,31 @@ function CardSlide() {
   return (
     <>
       <div className="flex justify-around w-3/5 mx-auto">
-        {data.map((pd) => (
-          <>
-            <div
-              key={pd.imgAlt}
-              className="flex flex-col items-center cursor-pointer"
-            >
-              <img
-                src={pd.imgURL}
-                alt={pd.imgAlt}
-                className="w-16 h-16 rounded-full"
-              />
-              <span className="my-2 text-xs">{pd.title}</span>
-            </div>
-          </>
+        {data.map((pd, index) => (
+          <div
+            key={index}
+            className="flex flex-col items-center cursor-pointer"
+          >
+            <img
+              src={pd.imgURL}
+              alt={pd.imgAlt}
+              className="w-16 h-16 rounded-full"
+            />
+            <span className="my-2 text-xs">{pd.title}</span>
+          </div>
         ))}
       </div>
       <div className="flex flex-col justify-center items-center my-12">
         <span className="text-2xl font-bold">JOIN</span>
         <span className="text-2xl font-bold">1 million+ followers</span>
         <span className="text-2xl font-bold">on instagram</span>
+        <span className="flex mt-3">
+          <Icon icon="ic:round-star" className="text-yellow-500 text-2xl" />
+          <Icon icon="ic:round-star" className="text-yellow-500 text-2xl" />
+          <Icon icon="ic:round-star" className="text-yellow-500 text-2xl" />
+          <Icon icon="ic:round-star" className="text-yellow-500 text-2xl" />
+          <Icon icon="ic:round-star" className="text-yellow-500 text-2xl" />
+        </span>
       </div>
 
       <div className="relative">
@@ -82,7 +88,7 @@ function CardSlide() {
             onClick={handlePrevious}
             className="text-3xl text-slate-600 border-slate-500 border-2 font-semibold w-12 h-12 flex justify-center items-center"
           >
-            {"<"}
+            <Icon icon="solar:alt-arrow-left-linear" />
           </button>
 
           <img
@@ -97,7 +103,7 @@ function CardSlide() {
             onClick={handleNext}
             className="text-3xl text-slate-600 border-2 border-slate-500 font-semibold w-12 h-12 flex justify-center items-center"
           >
-            {">"}
+            <Icon icon="solar:alt-arrow-right-linear" />
           </button>
         </div>
         <div className="flex justify-center">
