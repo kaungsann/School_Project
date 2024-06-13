@@ -10,10 +10,10 @@ const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    setCredentials: (state, { payload: { user, tokens } }) => {
+    setCredentials: (state, { payload: { token, firstName, lastName } }) => {
       state.isLoggedIn = true;
-      state.tokens = tokens;
-      state.user = user;
+      state.tokens = token;
+      state.user = firstName + lastName;
     },
     removeCredentials: (state) => {
       state.isLoggedIn = false;

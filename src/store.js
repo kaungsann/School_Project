@@ -19,14 +19,16 @@ import authReducer from "./features/authSlice";
 import cartReducer from "./features/cartSlice";
 
 import { authApi } from "./services/authAPI";
-import { productApi } from "./services/ProductApi";
+import { productApi } from "./services/productApi";
+import { categoryApi } from "./services/categoryApi";
+import { userApi } from "./services/userApi";
 
 export const resetStore = createAction("RESET_STORE");
 
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: ["auth", "product"],
+  whitelist: ["auth", "cart"],
 };
 
 const rootReducer = combineReducers({
@@ -34,6 +36,8 @@ const rootReducer = combineReducers({
   cart: cartReducer,
   [authApi.reducerPath]: authApi.reducer,
   [productApi.reducerPath]: productApi.reducer,
+  [categoryApi.reducerPath]: categoryApi.reducer,
+  [userApi.reducerPath]: userApi.reducer,
 });
 
 const resettableReducer = (state, action) => {
@@ -52,7 +56,12 @@ const store = configureStore({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
-    }).concat(authApi.middleware, productApi.middleware),
+    }).concat(
+      authApi.middleware,
+      productApi.middleware,
+      categoryApi.middleware,
+      userApi.middleware
+    ),
 });
 
 const persistor = persistStore(store);

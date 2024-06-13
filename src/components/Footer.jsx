@@ -2,6 +2,39 @@ import { Icon } from "@iconify/react";
 function Footer() {
   return (
     <>
+      <div className="flex justify-evenly my-12">
+        <div className="flex items-center cursor-pointer">
+          <Icon
+            icon="vaadin:truck"
+            style={{ color: "black" }}
+            className="text-xl"
+          />
+          <span className="ml-2 text-xs font-semibold hover:underline-offset-8 hover:underline decoration-solid underline-effect">
+            Free World Wide Shipping
+          </span>
+        </div>
+        <div className="flex items-center cursor-pointer">
+          <Icon
+            icon="streamline:arrow-round-right"
+            style={{ color: "black" }}
+            className="text-xl"
+          />
+
+          <span className="ml-2 text-xs font-semibold hover:underline-offset-8 hover:underline decoration-solid underline-effect">
+            Full 30-day Return Policy
+          </span>
+        </div>
+        <div className="flex items-center cursor-pointer">
+          <Icon
+            icon="fa:users"
+            style={{ color: "black" }}
+            className="text-xl"
+          />
+          <span className="ml-2 text-xs font-semibold hover:underline-offset-8 hover:underline decoration-solid underline-effect">
+            Join 1000 stationery-addicts
+          </span>
+        </div>
+      </div>
       <div className="flex justify-around p-6 bg-slate-50">
         <div className="flex mt-6">
           <Icon

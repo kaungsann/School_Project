@@ -7,9 +7,10 @@ import {
   Button,
   useDisclosure,
   Input,
+  Spinner,
 } from "@nextui-org/react";
 
-// import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 // import { useLogoutMutation } from "../services/authAPI";
 // import { removeCredentials } from "../features/authSlice";
 // import { useNavigate } from "react-router-dom";
@@ -21,9 +22,9 @@ import CurrencyFlags from "./CurrencyFlags";
 import "../App.css";
 import { useEffect, useState } from "react";
 import SelectedItemsBox from "../components/SelectedItemsBox";
+import { useGetCategoriesQuery } from "../services/categoryApi";
 
 import LoginForm from "./LoginForm";
-import { useSelector } from "react-redux";
 
 const MainNavbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -32,6 +33,9 @@ const MainNavbar = () => {
   const [seasonOpenBox, setSeasonOpenBox] = useState(null);
   const [showSelectedBox, setShowSelectedBox] = useState(false);
   const [boxAnimationClass, setBoxAnimationClass] = useState("");
+
+  const { data, isLoading, error } = useGetCategoriesQuery();
+
   const carts = useSelector((state) => state.cart);
 
   const handleScroll = () => {
@@ -49,34 +53,7 @@ const MainNavbar = () => {
     };
   }, []);
 
-  // const [logout, { isLoading }] = useLogoutMutation();
-  // const dispatch = useDispatch();
-  // const navigateTo = useNavigate();
-  // const { user, tokens } = useSelector((state) => state.auth);
-
-  // const menuItems = [
-  //   ["Tasks", "/tasks"],
-  //   ["Users", "/users"],
-  //   ["Project", "/projects"],
-  //   ["My Settings", "/setting"],
-  //   ["Summary", "/summary"],
-  // ];
-
-  // const handleLogout = async () => {
-  //   logout(tokens.refresh.token)
-  //     .unwrap()
-  //     .then(() => {
-  //       dispatch(removeCredentials());
-  //       dispatch(resetStore());
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // };
-
-  // const handleCloseBox = () => {
-  //   setShowSelectedBox(false);
-  // };
+  console.log("cat data  name is ", data);
 
   const handleCloseBox = () => {
     setBoxAnimationClass("close-animation"); // Add animation class
@@ -183,7 +160,7 @@ const MainNavbar = () => {
             />
 
             <span>Shopping Cart</span>
-            <span className="text-sm rounded-full px-2 py-1 bg-pink-100 font-semibold ml-2">
+            <span className="text-sm rounded-full px-3 py-1 bg-[#06539D] text-white font-semibold ml-2">
               {carts?.length}
             </span>
           </div>
@@ -202,7 +179,7 @@ const MainNavbar = () => {
               className="text-3xl text-slate-600 font-semibold"
             />
 
-            <span className="text-sm rounded-full px-2 py-1 bg-pink-100 font-semibold absolute -top-3 -right-3">
+            <span className="rounded-full px-2 py-0.5 text-xs bg-[#06539D] text-white font-semibold absolute -top-2 -right-2">
               {carts?.length}
             </span>
           </div>
@@ -229,35 +206,27 @@ const MainNavbar = () => {
                 </div>
 
                 {subMenuOpen && (
-                  <ul className="absolute w-60 z-40 bg-white shadow-md -left-3">
-                    <li className="text-md py-2 mx-3 border-b-2 border-slate-200 hover:text-pink-400">
-                      Notebooks
-                    </li>
-                    <li className="text-md py-2 mx-3 border-b-2 border-slate-200 hover:text-pink-400">
-                      Notebooks
-                    </li>
-                    <li className="text-md py-2 mx-3 border-b-2 border-slate-200 hover:text-pink-400">
-                      Bullet Journals
-                    </li>
-                    <li className="text-md py-2 mx-3 border-b-2 border-slate-200 hover:text-pink-400">
-                      Stamps
-                    </li>
-                    <li className="text-md py-2 mx-3 border-b-2 border-slate-200 hover:text-pink-400">
-                      Washi Tape
-                    </li>
-                    <li className="text-md py-2 mx-3 border-b-2 border-slate-200 hover:text-pink-400">
-                      Pencils Case
-                    </li>
-                    <li className="text-md py-2 mx-3 border-b-2 border-slate-200 hover:text-pink-400">
-                      Bags
-                    </li>
-                    <li className="text-md py-2 mx-3 border-b-2 border-slate-200 hover:text-pink-400">
-                      Pens
-                    </li>
-                    <li className="text-md py-2 mx-3 border-b-2 border-slate-200 hover:text-pink-400">
-                      Stickers
-                    </li>
+                  <ul className="absolute w-60 z-40  bg-white shadow-md -left-3">
+                    {data?.map((cat) => (
+                      <li
+                        key={cat.id}
+                        className="text-md py-2 mx-3 border-b-2 border-slate-200 hover:text-[#06539D]"
+                      >
+                        {cat.name}
+                      </li>
+                    ))}
+
+                    {isLoading && (
+                      <span className="w-full my-4 flex justify-center">
+                        <Spinner size="sm" />
+                      </span>
+                    )}
                   </ul>
+                )}
+                {error && (
+                  <span className="w-full my-4 flex justify-center text-red-600">
+                    {error?.error}
+                  </span>
                 )}
               </div>
             </li>
@@ -266,7 +235,7 @@ const MainNavbar = () => {
           <li className="ml-10 text-slate-600 font-bold text-md relative flex items-center cursor-pointer">
             <span className="underline-effect decoration-2"> Best Sellers</span>
             {!isScrolled && (
-              <span className="bg-red-400 text-white text-xs px-1.5 py-1 rounded-sm absolute right-1 -top-6">
+              <span className="bg-[#06539D] text-white text-xs px-1.5 py-1 rounded-sm absolute right-1 -top-6">
                 Hot
                 <div className="arrow-down"></div>
               </span>

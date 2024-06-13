@@ -4,25 +4,25 @@ import { store, persistor } from "./store";
 import { PersistGate } from "redux-persist/integration/react";
 import { useRoutes } from "react-router-dom";
 
-import LoginForm from "./components/LoginForm";
-import RegisterForm from "./components/RegisterForm";
 import NotFound from "./components/NotFound";
 import PrivateRoute from "./components/PrivateRoute";
 
 import UnauthorizePage from "./pages/UnauthorizePage";
 import HomePage from "./pages/HeroPage";
 import PaymentPage from "./pages/PaymentPage";
+import ProductsPage from "./pages/ProductsPage";
+import ProductDetailPage from "./pages/ProductDetailPage";
 
 export default function App() {
   const routeConfig = [
     { path: "/", element: <HomePage /> },
-    { path: "/login", element: <LoginForm /> },
-    { path: "/register", element: <RegisterForm /> },
     { path: "/401-unauthorized", element: <UnauthorizePage /> },
     { path: "/payment", element: <PaymentPage /> },
+    { path: "/products", element: <ProductsPage /> },
+    { path: "/product/detail/:id", element: <ProductDetailPage /> },
     {
       path: "/",
-      element: <PrivateRoute roles={["superadmin"]} />,
+      element: <PrivateRoute roles={["user"]} />,
       children: [
         // { path: "profile", element: <ProfilePage /> },
       ],

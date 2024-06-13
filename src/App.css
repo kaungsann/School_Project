@@ -39,7 +39,7 @@ body::-webkit-scrollbar {
   height: 0;
   border-left: 5px solid transparent;
   border-right: 5px solid transparent;
-  border-top: 5px solid #fca5a5; /* Adjust color to match the label's background */
+  border-top: 5px solid #06539d; /* Adjust color to match the label's background */
 }
 
 .arrow-newdown {

@@ -7,6 +7,7 @@ import { calculateSubtotal } from "../utils/cartCountPrice";
 import { removeCart, updateCartQuantity } from "../features/cartSlice";
 function SelectedItemsBox({ handleClose, animationClass }) {
   const carts = useSelector((state) => state.cart);
+  const { isLoggedIn } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
 
   console.log("select carts is a", carts);
@@ -78,10 +79,10 @@ function SelectedItemsBox({ handleClose, animationClass }) {
               key={cart.id}
               className="flex justify-between items-center p-4 border-b-1"
             >
-              <img src={cart.image} alt={cart.title} className="w-24 h-24" />
+              <img src={cart.image1} alt={cart.name} className="w-24 h-24" />
               <div className="w-3/5">
                 <h2 className="text-slate-800 text-sm font-semibold">
-                  {cart.title}
+                  {cart.name}
                 </h2>
                 <div className="flex items-center mt-2 border-y-1 w-28">
                   <div
@@ -119,7 +120,7 @@ function SelectedItemsBox({ handleClose, animationClass }) {
                   onClick={() => dispatch(removeCart(cart.id))}
                 />
                 <p className="mt-5 text-slate-500 text-sm font-semibold">
-                  ${cart.price * cart?.quantity}
+                  {cart.price * cart?.quantity}
                 </p>
               </div>
             </div>
@@ -132,7 +133,10 @@ function SelectedItemsBox({ handleClose, animationClass }) {
               <p className="text-md text-slate-900 mb-4">
                 Add yours favourite items to your cart
               </p>
-              <button className="py-3 text-center bg-[#C98897] hover:opacity-75 text-white font-bold text-xl w-4/5 mx-auto rounded-md shadow-md">
+              <button
+                onClick={() => navigate("/products")}
+                className="py-3 text-center bg-[#C98897] hover:opacity-75 text-white font-bold text-xl w-4/5 mx-auto rounded-md shadow-md"
+              >
                 Shop Now
               </button>
             </div>
@@ -152,13 +156,16 @@ function SelectedItemsBox({ handleClose, animationClass }) {
 
             <button
               onClick={() => navigate("/payment")}
-              className="py-3 w-full text-center bg-[#C98897] hover:opacity-75 text-white font-bold text-xl rounded-md shadow-md"
+              className="py-3 w-full text-center bg-[#2F3132] hover:opacity-75 text-white font-bold text-xl rounded-md shadow-md"
             >
               <div className="flex justify-center items-center ">
-                <Icon
-                  icon="teenyicons:lock-solid"
-                  className="text-2xl text-slate-50"
-                />
+                {!isLoggedIn && (
+                  <Icon
+                    icon="teenyicons:lock-solid"
+                    className="text-2xl text-slate-50"
+                  />
+                )}
+
                 <span className="text-xl font-bold font-sans text-slate-50 ml-4">
                   CHECKOUT
                 </span>

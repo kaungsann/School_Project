@@ -9,27 +9,40 @@ import {
   Input,
   Link,
   Spinner,
+  Dropdown,
+  DropdownTrigger,
+  DropdownMenu,
+  DropdownItem,
 } from "@nextui-org/react";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
-import { setCredentials } from "../features/authSlice";
+// import { useNavigate } from "react-router-dom";
+import { setCredentials, removeCredentials } from "../features/authSlice";
 import { useLoginMutation } from "../services/authAPI";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import RegisterForm from "./RegisterForm";
 import { Icon } from "@iconify/react";
+import { resetStore } from "../store";
+import { useEffect } from "react";
 
 function LoginForm() {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const { user } = useSelector((state) => state.auth);
+
   const {
     isOpen: isRegisterOpen,
     onOpen: onRegisterOpen,
     onClose: onRegisterClose,
   } = useDisclosure();
 
-  const [login, { isLoading, error }] = useLoginMutation();
+  const [login, { isLoading, error, isSuccess }] = useLoginMutation();
 
   const dispatch = useDispatch();
-  const navigateTo = useNavigate();
+  // const navigateTo = useNavigate();
+
+  const handleLogout = async () => {
+    dispatch(removeCredentials());
+    dispatch(resetStore());
+  };
 
   const {
     register,
@@ -40,22 +53,48 @@ function LoginForm() {
   const handleFormSubmit = async (data) => {
     console.log("data is a", data);
     const credentials = await login(data).unwrap();
+
     dispatch(setCredentials(credentials));
     console.log("login is", credentials);
-    navigateTo("/tasks");
+
+    // navigateTo("/tasks");
   };
 
   console.log("error  is a", error);
 
+  useEffect(() => {
+    if (isSuccess) {
+      onClose();
+    }
+  }, [isSuccess, onClose]);
   return (
     <>
       {/* for login box */}
-      <button onClick={() => onOpen()} className="flex justify-end">
-        <Icon
-          icon="iconamoon:lock-off-light"
-          className="text-3xl text-slate-600 font-semibold"
-        />
-      </button>
+
+      {user ? (
+        <Dropdown>
+          <DropdownTrigger>
+            <span className="text-xs uppercase cursor-pointer">{user}</span>
+          </DropdownTrigger>
+          <DropdownMenu aria-label="Static Actions">
+            <DropdownItem
+              onClick={handleLogout}
+              key="delete"
+              className="text-danger"
+              color="danger"
+            >
+              Logout
+            </DropdownItem>
+          </DropdownMenu>
+        </Dropdown>
+      ) : (
+        <button onClick={() => onOpen()} className="flex justify-end">
+          <Icon
+            icon="iconamoon:lock-off-light"
+            className="text-3xl text-slate-600 font-semibold"
+          />
+        </button>
+      )}
 
       {/* for login box */}
       <Modal size="xs" isOpen={isOpen} onClose={onClose}>

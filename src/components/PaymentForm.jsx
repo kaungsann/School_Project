@@ -296,7 +296,7 @@ function PaymentForm() {
                         </button>
                       </AccordionItem>
                     </Accordion>
-                    <button className="w-full bg-[#C98897] mt-4 rounded-md text-white text-bold text-xl text-center py-3">
+                    <button className="w-full bg-[#2F3132] mt-4 rounded-md text-white text-bold text-xl text-center py-3">
                       Pay Now
                     </button>
                   </div>
@@ -316,8 +316,8 @@ function PaymentForm() {
                 >
                   <div className="relative">
                     <img
-                      src={cart.image}
-                      alt={cart.title}
+                      src={cart.image1}
+                      alt={cart.name}
                       className="w-20 h-20"
                     />
                     <div className="bg-slate-500 w-8 h-8 flex justify-center items-center absolute -top-3 -right-6 p-2 rounded-full">
@@ -335,7 +335,7 @@ function PaymentForm() {
 
                   <div className="flex flex-col items-center">
                     <p className="text-slate-500 text-sm font-semibold">
-                      $ {cart.price * cart?.quantity}
+                      {cart.price * cart?.quantity}
                     </p>
                   </div>
                 </div>

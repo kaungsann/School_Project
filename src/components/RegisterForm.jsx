@@ -22,6 +22,9 @@ function RegisterForm({ closeBox, switchToLogin }) {
     const credentials = await registerData(data).unwrap();
     dispatch(setCredentials(credentials));
     console.log("register is", credentials);
+    if (credentials) {
+      switchToLogin();
+    }
     // navigateTo("/");
   };
 

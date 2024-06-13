@@ -1,14 +1,17 @@
 import { useState } from "react";
-import { useGetProductsQuery } from "../services/ProductApi";
+import { useGetProductsQuery } from "../services/productApi";
 import { useDispatch } from "react-redux";
 
 import { addCart } from "../features/cartSlice";
+import { Spinner } from "@nextui-org/react";
+import { useNavigate } from "react-router-dom";
 
 function CardItems() {
   const [catId, setCatId] = useState(null);
   const { data, isLoading, error } = useGetProductsQuery({ categoryId: catId });
 
   const dispatch = useDispatch();
+  const navigateTo = useNavigate();
 
   // const list = [
   //   {
@@ -62,21 +65,44 @@ function CardItems() {
 
   return (
     <>
-      <div className="gap-2 grid grid-cols-2 sm:grid-cols-4 w-11/12	mx-auto">
+      <div className="gap-2 grid grid-cols-2 sm:grid-cols-4 w-11/12	mx-auto relative ">
         {data?.map((item, index) => (
           <div
             key={index}
-            className="mb-16 flex flex-col items-center cursor-pointer hover:border-2 hover:border-blue-500"
-            onClick={() => handleClickAddToCart(item)}
+            className="mb-12 flex flex-col mx-3 cursor-pointer"
+            onClick={() => navigateTo(`/product/detail/${item.id}`)}
           >
-            <img alt={item.title} src={item.image} className="w-76 h-72" />
-            <h5 className="text-sm font-semibold w-60 my-3 text-center text-slate-800">
-              {item.title}
+            <img
+              alt={item.title}
+              src={item.image1}
+              className="w-full h-72 rounded-md"
+            />
+            <h5 className="text-sm font-bold mt-1.5 text-slate-900 font-sans">
+              {item.name}
             </h5>
-            <p className="text-pink-300 font-bold text-lg">{item.price}</p>
+            <p className="text-slate-600 my-2 font-semibold text-lg">
+              {item.price} mmk
+            </p>
+            <button
+              onClick={() => handleClickAddToCart(item)}
+              className="w-full py-2 bg-[#2F3132] hover:opacity-75 rounded-md shadow-md text-white font-sans font-bold"
+            >
+              Shop Now
+            </button>
           </div>
         ))}
       </div>
+
+      {isLoading && (
+        <span className="w-4/5 mx-auto my-12 flex justify-center">
+          <Spinner size="md" />
+        </span>
+      )}
+      {error && (
+        <span className="w-full my-4 flex justify-center text-red-600">
+          {error?.error}
+        </span>
+      )}
     </>
   );
 }
