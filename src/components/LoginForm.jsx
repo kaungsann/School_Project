@@ -74,9 +74,19 @@ function LoginForm() {
       {user ? (
         <Dropdown>
           <DropdownTrigger>
-            <span className="text-xs uppercase cursor-pointer">{user}</span>
+            <Icon
+              icon="mingcute:user-3-fill"
+              className="text-3xl text-slate-500 font-semibold cursor-pointer"
+            />
           </DropdownTrigger>
           <DropdownMenu aria-label="Static Actions">
+            <DropdownItem
+              className="text-slate-600 font-sans font-semibold"
+              color="primary"
+            >
+              <span className="text-xs uppercase cursor-pointer">{user}</span>
+            </DropdownItem>
+
             <DropdownItem
               onClick={handleLogout}
               key="delete"

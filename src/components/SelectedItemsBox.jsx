@@ -135,7 +135,7 @@ function SelectedItemsBox({ handleClose, animationClass }) {
               </p>
               <button
                 onClick={() => navigate("/products")}
-                className="py-3 text-center bg-[#C98897] hover:opacity-75 text-white font-bold text-xl w-4/5 mx-auto rounded-md shadow-md"
+                className="py-3 text-center bg-[#2F3132] hover:opacity-75 text-white font-bold text-xl w-4/5 mx-auto rounded-md shadow-md"
               >
                 Shop Now
               </button>
