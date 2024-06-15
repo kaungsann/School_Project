@@ -19,7 +19,7 @@ const UnauthorizePage = () => {
           variant="solid"
           size="md"
           radius="sm"
-          onClick={() => navigate("/login")}
+          onClick={() => navigate("/")}
         >
           Back to Login
         </Button>

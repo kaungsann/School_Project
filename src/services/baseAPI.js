@@ -1,4 +1,4 @@
-import { fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { fetchBaseQuery } from "@reduxjs/toolkit/query/react"; //RTK QUERY
 import { BASE_URL } from "../config/config";
 
 const baseQueryWithReauth = fetchBaseQuery({

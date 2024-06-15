@@ -28,6 +28,9 @@ function LoginForm() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { user } = useSelector((state) => state.auth);
 
+  //useDispatch // redux items to update
+  //useSelector // redux store to show items
+
   const {
     isOpen: isRegisterOpen,
     onOpen: onRegisterOpen,

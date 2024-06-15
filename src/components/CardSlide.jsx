@@ -65,7 +65,7 @@ function CardSlide() {
               alt={pd.imgAlt}
               className="w-16 h-16 rounded-full"
             />
-            <span className="my-2 text-xs">{pd.title}</span>
+            <span className="my-2 text-sm font-semibold">{pd.title}</span>
           </div>
         ))}
       </div>
@@ -112,7 +112,7 @@ function CardSlide() {
               key={index}
               onClick={() => handleDotClick(index)}
               className={`cursor-pointer rounded-full w-4 h-4 ml-2 ${
-                index === currentIndex ? "bg-[#c98897]" : "bg-slate-300"
+                index === currentIndex ? "bg-[#2F3132]" : "bg-slate-300"
               }`}
             ></span>
           ))}

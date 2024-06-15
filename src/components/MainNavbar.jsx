@@ -9,14 +9,8 @@ import {
   Input,
   Spinner,
 } from "@nextui-org/react";
-
+import PropTypes from "prop-types";
 import { useSelector } from "react-redux";
-// import { useLogoutMutation } from "../services/authAPI";
-// import { removeCredentials } from "../features/authSlice";
-// import { useNavigate } from "react-router-dom";
-// import { resetStore } from "../store";
-import logo from "../assets/images/notebook.png";
-// import { Avatar, Input } from "@nextui-org/react";
 import { Icon } from "@iconify/react";
 import CurrencyFlags from "./CurrencyFlags";
 import "../App.css";
@@ -25,8 +19,9 @@ import SelectedItemsBox from "../components/SelectedItemsBox";
 import { useGetCategoriesQuery } from "../services/categoryApi";
 
 import LoginForm from "./LoginForm";
+import { useNavigate } from "react-router-dom";
 
-const MainNavbar = () => {
+const MainNavbar = ({ setCategoryId }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
   const [subMenuOpen, setSubMenuOpen] = useState(null);
@@ -37,6 +32,7 @@ const MainNavbar = () => {
   const { data, isLoading, error } = useGetCategoriesQuery();
 
   const carts = useSelector((state) => state.cart);
+  const navigateTo = useNavigate();
 
   const handleScroll = () => {
     if (window.scrollY > 0) {
@@ -52,8 +48,6 @@ const MainNavbar = () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
-
-  console.log("cat data  name is ", data);
 
   const handleCloseBox = () => {
     setBoxAnimationClass("close-animation"); // Add animation class
@@ -82,6 +76,10 @@ const MainNavbar = () => {
 
   const handleSeasonMenuClose = () => {
     setSeasonOpenBox(null);
+  };
+
+  const handleCategoryClick = (categoryId) => {
+    setCategoryId(categoryId);
   };
 
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -152,7 +150,11 @@ const MainNavbar = () => {
         </div>
 
         <div className="flex justify-between my-4 cursor-pointer">
-          <img src={logo} alt="logoImg" className="w-60 h-6 ml-16" />
+          <img
+            src="https://cdn.shopify.com/s/files/1/0505/4709/7785/files/Zugu_Horizontal_Logo_Black_r_Top.svg?v=1654110226"
+            alt="logoImg"
+            className="w-60 h-12 ml-16"
+          />
           <div className="mr-12 flex items-center" onClick={handleOpenBox}>
             <Icon
               icon="ant-design:shopping-outlined"
@@ -210,6 +212,11 @@ const MainNavbar = () => {
                     {data?.map((cat) => (
                       <li
                         key={cat.id}
+                        // onClick={() => handleCategoryClick(cat.id)}
+                        onClick={() => {
+                          handleCategoryClick(cat.id);
+                          navigateTo("/products");
+                        }}
                         className="text-md py-2 mx-3 border-b-2 border-slate-200 hover:text-[#06539D]"
                       >
                         {cat.name}
@@ -235,7 +242,7 @@ const MainNavbar = () => {
           <li className="ml-10 text-slate-600 font-bold text-md relative flex items-center cursor-pointer">
             <span className="underline-effect decoration-2"> Best Sellers</span>
             {!isScrolled && (
-              <span className="bg-[#06539D] text-white text-xs px-1.5 py-1 rounded-sm absolute right-1 -top-6">
+              <span className="bg-[#2f3132] text-white text-xs px-1.5 py-1 rounded-sm absolute right-1 -top-6">
                 Hot
                 <div className="arrow-down"></div>
               </span>
@@ -246,7 +253,7 @@ const MainNavbar = () => {
             <span className="underline-effect decoration-2">Newest Items</span>
 
             {!isScrolled && (
-              <span className="bg-yellow-500 text-white text-xs px-1.5 py-1 rounded-sm absolute right-1 -top-6">
+              <span className="bg-[#06539D] text-white text-xs px-1.5 py-1 rounded-sm absolute right-1 -top-6">
                 New
                 <div className="arrow-newdown"></div>
               </span>
@@ -446,6 +453,10 @@ const MainNavbar = () => {
       )}
     </>
   );
+};
+
+MainNavbar.propTypes = {
+  setCategoryId: PropTypes.func.isRequired,
 };
 
 export default MainNavbar;

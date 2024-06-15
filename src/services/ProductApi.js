@@ -11,8 +11,9 @@ export const productApi = createApi({
         const { categoryId } = argu;
         let queryString = "products";
         if (categoryId) {
-          queryString += `/${categoryId}`;
+          queryString += `/category/${categoryId}`;
         }
+        console.log("query string is a", queryString);
         return queryString;
       },
       providesTags: (result) =>

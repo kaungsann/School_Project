@@ -8,6 +8,7 @@ import { useDispatch } from "react-redux";
 
 function ProductDetailPage() {
   const { id } = useParams();
+
   const dispatch = useDispatch();
   const navigateTo = useNavigate();
   const { data, isLoading } = useGetProductByIdQuery(id, {

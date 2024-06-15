@@ -39,7 +39,7 @@ body::-webkit-scrollbar {
   height: 0;
   border-left: 5px solid transparent;
   border-right: 5px solid transparent;
-  border-top: 5px solid #06539d; /* Adjust color to match the label's background */
+  border-top: 5px solid #2f3132; /* Adjust color to match the label's background */
 }
 
 .arrow-newdown {
@@ -52,7 +52,7 @@ body::-webkit-scrollbar {
   height: 0;
   border-left: 5px solid transparent;
   border-right: 5px solid transparent;
-  border-top: 5px solid #fde047; /* Adjust color to match the label's background */
+  border-top: 5px solid #06539d; /* Adjust color to match the label's background */
 }
 .nav-item {
   position: relative;
@@ -114,12 +114,20 @@ body::-webkit-scrollbar {
 }
 
 .inputLine:focus {
-  border: 1px solid #dc6ace;
-  box-shadow: 0 0 3px #dc6ace;
+  border: 1px solid #2f3132;
+  box-shadow: 0 0 3px #2f3132;
   outline-offset: 0px;
   outline: none;
 }
 
 .selectItems::-webkit-scrollbar {
   display: none;
+}
+
+.hover-image {
+  transition: transform 0.3s ease-in-out; /* Smooth transition */
+}
+
+.hover-image:hover {
+  transform: translateY(-10px); /* Move the image 10px upwards on hover */
 }

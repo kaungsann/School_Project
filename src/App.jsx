@@ -29,7 +29,7 @@ export default function App() {
     },
     {
       path: "/master",
-      element: <PrivateRoute roles={["superadmin"]} />,
+      element: <PrivateRoute roles={["superuser"]} />,
       children: [
         // { path: "projects/create", element: <ProjectForm mode="Create" /> },
       ],
