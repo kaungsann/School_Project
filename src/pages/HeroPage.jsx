@@ -9,18 +9,26 @@ import { useState } from "react";
 
 function HeroPage() {
   const [categoryId, setCategoryId] = useState(null);
+  const [filterValue, setFilterValue] = useState("");
 
   const handleChangeCategory = (catid) => {
     console.log("catid ", catid);
     setCategoryId(catid);
   };
 
+  const handleChangeFilter = (filter) => {
+    setFilterValue(filter);
+  };
+
   return (
     <>
-      <MainNavbar handleChangeCat={handleChangeCategory} />
+      <MainNavbar
+        handleChangeCat={handleChangeCategory}
+        handleChangeFilter={handleChangeFilter}
+      />
       <HeroImage />
       <CountTimer />
-      <CardItems categoryId={categoryId} />
+      <CardItems categoryId={categoryId} filterValue={filterValue} />
       <CardSlide />
 
       <img

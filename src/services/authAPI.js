@@ -1,4 +1,4 @@
-import { createApi } from "@reduxjs/toolkit/query/react";
+import { createApi } from "@reduxjs/toolkit/query/react"; //RTK QUERY
 import baseQueryWithReauth from "./baseAPI";
 
 export const authApi = createApi({

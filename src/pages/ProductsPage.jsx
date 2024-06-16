@@ -5,16 +5,24 @@ import MainNavbar from "../components/MainNavbar";
 
 function ProductsPage() {
   const [categoryId, setCategoryId] = useState(null);
+  const [filterValue, setFilterValue] = useState("");
 
   const handleChangeCategory = (catid) => {
     console.log("catid ", catid);
     setCategoryId(catid);
   };
+
+  const handleChangeFilter = (filter) => {
+    setFilterValue(filter);
+  };
   return (
     <>
-      <MainNavbar handleChangeCat={handleChangeCategory} />
+      <MainNavbar
+        handleChangeCat={handleChangeCategory}
+        handleChangeFilter={handleChangeFilter}
+      />
       <div className="mb-8 mt-16">
-        <CardItems categoryId={categoryId} />
+        <CardItems categoryId={categoryId} filterValue={filterValue} />
       </div>
       <Footer />
     </>

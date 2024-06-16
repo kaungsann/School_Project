@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-
+//mode = EDIT / UPDATE / DELETE
 const modeSlice = createSlice({
   name: "mode",
   initialState: {

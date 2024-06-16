@@ -8,6 +8,10 @@ import {
   useDisclosure,
   Input,
   Spinner,
+  // Dropdown,
+  // DropdownTrigger,
+  // DropdownMenu,
+  // DropdownItem,
 } from "@nextui-org/react";
 import PropTypes from "prop-types";
 import { useSelector } from "react-redux";
@@ -19,7 +23,7 @@ import { useGetCategoriesQuery } from "../services/categoryApi";
 
 import LoginForm from "./LoginForm";
 
-const MainNavbar = ({ handleChangeCat }) => {
+const MainNavbar = ({ handleChangeCat, handleChangeFilter }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
   const [subMenuOpen, setSubMenuOpen] = useState(null);
@@ -28,6 +32,7 @@ const MainNavbar = ({ handleChangeCat }) => {
   const [boxAnimationClass, setBoxAnimationClass] = useState("");
 
   const [searchTerm, setSearchTerm] = useState("");
+  const [modalSearchTerm, setModalSearchTerm] = useState("");
 
   const { data, isLoading } = useGetCategoriesQuery();
 
@@ -35,6 +40,16 @@ const MainNavbar = ({ handleChangeCat }) => {
 
   const handleSearchChange = (event) => {
     setSearchTerm(event.target.value);
+    handleChangeFilter(searchTerm);
+  };
+
+  const handleModalSearchChange = (event) => {
+    setModalSearchTerm(event.target.value);
+  };
+
+  const handleSearch = () => {
+    handleChangeFilter(modalSearchTerm);
+    onClose(); // Close the modal after search
   };
 
   const handleScroll = () => {
@@ -83,6 +98,7 @@ const MainNavbar = ({ handleChangeCat }) => {
 
   const handleCategoryClick = (categoryId) => {
     handleChangeCat(categoryId);
+    setIsFocused(false);
   };
 
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -100,44 +116,80 @@ const MainNavbar = ({ handleChangeCat }) => {
             className="max-w-sm md:max-w-md lg:w-96 ml-3 rounded-sm"
             endContent={<Icon icon="mdi:search" className="text-xl" />}
             onFocus={() => setIsFocused(true)}
-            onBlur={() => setIsFocused(false)}
+            // onBlur={() => setIsFocused(false)}
             value={searchTerm}
             onChange={handleSearchChange}
             aria-label="Search Product Name"
           />
+          {/* 
+          <Dropdown>
+            <DropdownTrigger>
+              <Input
+                type="search"
+                placeholder="Search Product Name"
+                variant="bordered"
+                size="md"
+                labelPlacement="outside"
+                className="max-w-sm md:max-w-md lg:w-96 ml-3 rounded-sm"
+                endContent={<Icon icon="mdi:search" className="text-xl" />}
+                value={searchTerm}
+                onChange={handleSearchChange}
+                aria-label="Search Product Name"
+              />
+            </DropdownTrigger>
+            <DropdownMenu
+              aria-label="Static Actions"
+              className="w-[650px] bg-red-500"
+            >
+              <div>
+                <DropdownItem key="new">New file</DropdownItem>
+                <DropdownItem key="copy">Copy link</DropdownItem>
+                <DropdownItem key="edit">Edit file</DropdownItem>
+                <DropdownItem
+                  key="delete"
+                  className="text-danger"
+                  color="danger"
+                >
+                  Delete file
+                </DropdownItem>
+              </div>
+              <div>
+                <DropdownItem key="new">New file</DropdownItem>
+                <DropdownItem key="copy">Copy link</DropdownItem>
+                <DropdownItem key="edit">Edit file</DropdownItem>
+                <DropdownItem
+                  key="delete"
+                  className="text-danger"
+                  color="danger"
+                >
+                  Delete file
+                </DropdownItem>
+              </div>
+            </DropdownMenu>
+          </Dropdown> */}
 
           {isFocused && (
             <div className="absolute w-3/5 right-0 top-8 mt-2 rounded-md h-72 z-40 bg-white border border-gray-300 shadow-lg p-4">
-              <div className="flex">
+              <div className="flex relative">
                 <div className="w-72">
                   <h5 className="underline-offset-8 text-md font-semibold	decoration-solid decoration-4">
                     POPULAR SEARCHS
                   </h5>
                   <ul className="my-4">
-                    <li className="flex items-center px-3 py-2 mx-3 rounded-md hover:bg-slate-100 cursor-pointer">
-                      <Icon icon="mdi:search" className="text-2xl" />
-                      <span className="ml-2 font-bold text-[#9333ea]">
-                        travel notebook
-                      </span>
-                    </li>
-                    <li className="flex items-center px-3 py-2 mx-3 rounded-md hover:bg-slate-100 cursor-pointer">
-                      <Icon icon="mdi:search" className="text-2xl" />
-                      <span className="ml-2 font-bold text-[#9333ea]">
-                        bullet Journal
-                      </span>
-                    </li>
-                    <li className="flex items-center px-3 py-2 mx-3 rounded-md hover:bg-slate-100 cursor-pointer">
-                      <Icon icon="mdi:search" className="text-2xl" />
-                      <span className="ml-2 font-bold text-[#9333ea]">
-                        Bullet Journal set
-                      </span>
-                    </li>
-                    <li className="flex items-center px-3 py-2 mx-3 rounded-md hover:bg-slate-100 cursor-pointer">
-                      <Icon icon="mdi:search" className="text-2xl" />
-                      <span className="ml-2 font-bold text-[#9333ea]">
-                        Washi Tape
-                      </span>
-                    </li>
+                    {data?.slice(2, 7).map((cat) => (
+                      <li
+                        key={cat.id}
+                        onClick={() => {
+                          handleCategoryClick(cat.id);
+                        }}
+                        className="flex items-center px-3 py-2 mx-3 rounded-md hover:bg-slate-100 cursor-pointer"
+                      >
+                        <Icon icon="mdi:search" className="text-2xl" />
+                        <span className="ml-2 font-bold text-[#9333ea]">
+                          {cat.name}
+                        </span>
+                      </li>
+                    ))}
                   </ul>
                 </div>
                 <div className="ml-6">
@@ -148,6 +200,12 @@ const MainNavbar = ({ handleChangeCat }) => {
                     Start typing for search results
                   </h6>
                 </div>
+                <span
+                  onClick={() => setIsFocused(false)}
+                  className="absolute top-0 right-3 cursor-pointer text-slate-600 text-2xl font-semibold"
+                >
+                  X
+                </span>
               </div>
             </div>
           )}
@@ -429,13 +487,15 @@ const MainNavbar = ({ handleChangeCat }) => {
                         variant="bordered"
                         placeholder="search product name ..."
                         aria-label="search-product"
+                        value={modalSearchTerm}
+                        onChange={handleModalSearchChange}
                       />
                     </ModalBody>
                     <ModalFooter>
                       <Button color="danger" variant="light" onPress={onClose}>
                         Close
                       </Button>
-                      <Button color="primary" onPress={onClose}>
+                      <Button color="primary" onClick={handleSearch}>
                         Search
                       </Button>
                     </ModalFooter>
@@ -462,6 +522,7 @@ const MainNavbar = ({ handleChangeCat }) => {
 
 MainNavbar.propTypes = {
   handleChangeCat: PropTypes.func.isRequired,
+  handleChangeFilter: PropTypes.func.isRequired,
 };
 
 export default MainNavbar;

@@ -4,7 +4,11 @@ import { useAuth } from "../hooks/useAuth";
 import AppContainer from "../AppContainer";
 
 const PrivateRoute = ({ roles }) => {
+  //roles = ["user"]
   const { isLoggedIn, role } = useAuth();
+
+  //USER = USER
+  //LOGGEDiN = TRUE
 
   const currentRole = role;
 

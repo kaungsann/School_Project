@@ -74,7 +74,6 @@ export default function Sidebar() {
             <h3 className="font-semibold ml-4">Category</h3>
           </div>
         </Link>
-
         <Link to="/payment-transition">
           <div
             className="flex items-center cursor-pointer py-2"

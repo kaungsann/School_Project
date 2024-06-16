@@ -16,6 +16,7 @@ import AdminPage from "./pages/AdminPage";
 
 export default function App() {
   const routeConfig = [
+    //SIMPLE USER / GUESS USER
     { path: "/", element: <HomePage /> },
     { path: "/401-unauthorized", element: <UnauthorizePage /> },
     { path: "/payment", element: <PaymentPage /> },

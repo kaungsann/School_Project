@@ -6,13 +6,14 @@ import { Spinner } from "@nextui-org/react";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useEffect, useState } from "react";
 
-function CardItems({ categoryId }) {
-  console.log("category id is", categoryId);
-
+function CardItems({ categoryId, filterValue }) {
   const { data, isLoading, error } = useGetProductsQuery({
     categoryId: categoryId,
   });
+
+  const [filteredProducts, setFilteredProducts] = useState([]);
 
   const dispatch = useDispatch();
   const navigateTo = useNavigate();
@@ -21,6 +22,14 @@ function CardItems({ categoryId }) {
     toast.info(`${item.name} has been added to your cart!`);
     dispatch(addCart(item)); // Dispatch addCart action with the clicked item
   };
+
+  useEffect(() => {
+    // Filter products based on search term whenever it changes
+    const filtered = data?.filter((product) =>
+      product.name.toLowerCase().includes(filterValue.toLowerCase())
+    );
+    setFilteredProducts(filtered);
+  }, [filterValue, data]);
 
   return (
     <>
@@ -37,7 +46,7 @@ function CardItems({ categoryId }) {
         theme="light"
       />
       <div className="gap-2 grid grid-cols-2 sm:grid-cols-4 w-11/12	mx-auto relative ">
-        {data?.map((item, index) => (
+        {filteredProducts?.map((item, index) => (
           <div key={index} className="mb-12 flex flex-col mx-3 cursor-pointer">
             <div onClick={() => navigateTo(`/product/detail/${item.id}`)}>
               <img
@@ -79,6 +88,7 @@ function CardItems({ categoryId }) {
 
 CardItems.propTypes = {
   categoryId: PropTypes.number,
+  filterValue: PropTypes.string,
 };
 
 export default CardItems;
