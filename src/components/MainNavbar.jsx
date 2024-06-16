@@ -12,16 +12,14 @@ import {
 import PropTypes from "prop-types";
 import { useSelector } from "react-redux";
 import { Icon } from "@iconify/react";
-import CurrencyFlags from "./CurrencyFlags";
 import "../App.css";
 import { useEffect, useState } from "react";
 import SelectedItemsBox from "../components/SelectedItemsBox";
 import { useGetCategoriesQuery } from "../services/categoryApi";
 
 import LoginForm from "./LoginForm";
-import { useNavigate } from "react-router-dom";
 
-const MainNavbar = ({ setCategoryId }) => {
+const MainNavbar = ({ handleChangeCat }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
   const [subMenuOpen, setSubMenuOpen] = useState(null);
@@ -29,10 +27,15 @@ const MainNavbar = ({ setCategoryId }) => {
   const [showSelectedBox, setShowSelectedBox] = useState(false);
   const [boxAnimationClass, setBoxAnimationClass] = useState("");
 
-  const { data, isLoading, error } = useGetCategoriesQuery();
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const { data, isLoading } = useGetCategoriesQuery();
 
   const carts = useSelector((state) => state.cart);
-  const navigateTo = useNavigate();
+
+  const handleSearchChange = (event) => {
+    setSearchTerm(event.target.value);
+  };
 
   const handleScroll = () => {
     if (window.scrollY > 0) {
@@ -79,7 +82,7 @@ const MainNavbar = ({ setCategoryId }) => {
   };
 
   const handleCategoryClick = (categoryId) => {
-    setCategoryId(categoryId);
+    handleChangeCat(categoryId);
   };
 
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -88,7 +91,6 @@ const MainNavbar = ({ setCategoryId }) => {
     <>
       <div className="bg-[#FFFFFF] relative">
         <div className="flex justify-end">
-          <CurrencyFlags />
           <Input
             type="search"
             placeholder="Search Product Name"
@@ -99,6 +101,8 @@ const MainNavbar = ({ setCategoryId }) => {
             endContent={<Icon icon="mdi:search" className="text-xl" />}
             onFocus={() => setIsFocused(true)}
             onBlur={() => setIsFocused(false)}
+            value={searchTerm}
+            onChange={handleSearchChange}
             aria-label="Search Product Name"
           />
 
@@ -189,7 +193,7 @@ const MainNavbar = ({ setCategoryId }) => {
 
         <ul className="flex justify-center">
           <li className="text-md flex items-center cursor-pointer relative group">
-            <li
+            <div
               className="cursor-pointer relative"
               onMouseEnter={handleSubMenuOpen}
               onMouseLeave={handleSubMenuClose}
@@ -208,19 +212,25 @@ const MainNavbar = ({ setCategoryId }) => {
                 </div>
 
                 {subMenuOpen && (
-                  <ul className="absolute w-60 z-40  bg-white shadow-md -left-3">
+                  <div className="absolute w-60 z-40  bg-white shadow-md -left-3">
+                    <div
+                      key="all"
+                      onClick={() => handleCategoryClick(null)} // Passing null to reset the filter
+                      className="text-md py-2 mx-3 border-b-2 border-slate-200 hover:text-[#06539D]"
+                    >
+                      Show All
+                    </div>
                     {data?.map((cat) => (
-                      <li
+                      <div
                         key={cat.id}
                         // onClick={() => handleCategoryClick(cat.id)}
                         onClick={() => {
                           handleCategoryClick(cat.id);
-                          navigateTo("/products");
                         }}
                         className="text-md py-2 mx-3 border-b-2 border-slate-200 hover:text-[#06539D]"
                       >
                         {cat.name}
-                      </li>
+                      </div>
                     ))}
 
                     {isLoading && (
@@ -228,15 +238,10 @@ const MainNavbar = ({ setCategoryId }) => {
                         <Spinner size="sm" />
                       </span>
                     )}
-                  </ul>
-                )}
-                {error && (
-                  <span className="w-full my-4 flex justify-center text-red-600">
-                    {error?.error}
-                  </span>
+                  </div>
                 )}
               </div>
-            </li>
+            </div>
           </li>
 
           <li className="ml-10 text-slate-600 font-bold text-md relative flex items-center cursor-pointer">
@@ -295,7 +300,7 @@ const MainNavbar = ({ setCategoryId }) => {
               <div className="absolute right-0 z-40 bg-white shadow-md p-6 top-10 left-0">
                 <section className="grid grid-cols-4 gap-8 w-full pt-4">
                   <div>
-                    <ul>
+                    <ol>
                       <li className="mb-8 text-md font-sans font-semibold cursor-pointer hover:text-pink-300">
                         Summer in Italy 🍋
                       </li>
@@ -317,10 +322,10 @@ const MainNavbar = ({ setCategoryId }) => {
                       <li className="mb-8 text-md font-sans font-semibold cursor-pointer hover:text-pink-300">
                         s Lunar Mystery 🔮
                       </li>
-                    </ul>
+                    </ol>
                   </div>
                   <div>
-                    <ul>
+                    <ol>
                       <li className="mb-8 text-md font-sans font-semibold cursor-pointer hover:text-pink-300">
                         Maple Journey 🍁{" "}
                       </li>
@@ -342,10 +347,10 @@ const MainNavbar = ({ setCategoryId }) => {
                       <li className="mb-8 text-md font-sans font-semibold cursor-pointer hover:text-pink-300">
                         Vintage Rose 🥀{" "}
                       </li>
-                    </ul>
+                    </ol>
                   </div>
                   <div>
-                    <ul>
+                    <ol>
                       <li className="mb-8 text-md font-sans font-semibold cursor-pointer hover:text-pink-300">
                         Moonlit Alchemy 🔮{" "}
                       </li>
@@ -367,10 +372,10 @@ const MainNavbar = ({ setCategoryId }) => {
                       <li className="mb-8 text-md font-sans font-semibold cursor-pointer hover:text-pink-300">
                         Tea Party Collection 🍵{" "}
                       </li>
-                    </ul>
+                    </ol>
                   </div>
                   <div>
-                    <ul>
+                    <ol>
                       <li className="mb-8 text-md font-sans font-semibold cursor-pointer hover:text-pink-300">
                         Cloud Dreamland ☁️{" "}
                       </li>
@@ -389,7 +394,7 @@ const MainNavbar = ({ setCategoryId }) => {
                       <li className="mb-8 text-md font-sans font-semibold cursor-pointer hover:text-pink-300">
                         Floral Collection 💐{" "}
                       </li>
-                    </ul>
+                    </ol>
                   </div>
                 </section>
               </div>
@@ -456,7 +461,7 @@ const MainNavbar = ({ setCategoryId }) => {
 };
 
 MainNavbar.propTypes = {
-  setCategoryId: PropTypes.func.isRequired,
+  handleChangeCat: PropTypes.func.isRequired,
 };
 
 export default MainNavbar;

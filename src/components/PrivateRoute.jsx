@@ -4,8 +4,9 @@ import { useAuth } from "../hooks/useAuth";
 import AppContainer from "../AppContainer";
 
 const PrivateRoute = ({ roles }) => {
-  const { isLoggedIn, user } = useAuth();
-  const currentRole = user?.role;
+  const { isLoggedIn, role } = useAuth();
+
+  const currentRole = role;
 
   return isLoggedIn ? (
     roles && !roles.includes(currentRole) ? (
@@ -16,7 +17,7 @@ const PrivateRoute = ({ roles }) => {
       </AppContainer>
     )
   ) : (
-    <Navigate to="/login" replace />
+    <Navigate to="/" replace />
   );
 };
 

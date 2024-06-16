@@ -12,6 +12,7 @@ import HomePage from "./pages/HeroPage";
 import PaymentPage from "./pages/PaymentPage";
 import ProductsPage from "./pages/ProductsPage";
 import ProductDetailPage from "./pages/ProductDetailPage";
+import AdminPage from "./pages/AdminPage";
 
 export default function App() {
   const routeConfig = [
@@ -28,10 +29,13 @@ export default function App() {
       ],
     },
     {
-      path: "/master",
+      path: "/adminpanel",
       element: <PrivateRoute roles={["superuser"]} />,
       children: [
-        // { path: "projects/create", element: <ProjectForm mode="Create" /> },
+        {
+          path: "products",
+          element: <AdminPage />,
+        },
       ],
     },
     { path: "*", element: <NotFound /> },

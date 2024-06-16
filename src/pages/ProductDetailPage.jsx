@@ -5,6 +5,8 @@ import { Spinner } from "@nextui-org/react";
 import Footer from "../components/Footer";
 import { addCart } from "../features/cartSlice";
 import { useDispatch } from "react-redux";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function ProductDetailPage() {
   const { id } = useParams();
@@ -15,9 +17,25 @@ function ProductDetailPage() {
     skip: !id,
   });
 
-  console.log("product detial is a", data);
+  const handleClickCarts = () => {
+    toast.info(`${data?.name} has been added to your cart!`),
+      dispatch(addCart(data));
+  };
+
   return (
     <>
+      <ToastContainer
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
       <MainNavbar />
       <div className="mt-12 relative">
         {data && (
@@ -41,7 +59,7 @@ function ProductDetailPage() {
               </p>
 
               <button
-                onClick={() => dispatch(addCart(data))}
+                onClick={handleClickCarts}
                 className="bg-[#2F3132] hover:opacity-75 font-bold rounded-md shadow-md font-sans mt-6 w-full py-3 text-center text-white"
               >
                 Add Cart

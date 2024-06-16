@@ -10,8 +10,6 @@ function SelectedItemsBox({ handleClose, animationClass }) {
   const { isLoggedIn } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
 
-  console.log("select carts is a", carts);
-
   const subtotal = calculateSubtotal(carts);
 
   const navigate = useNavigate();

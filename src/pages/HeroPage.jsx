@@ -10,9 +10,14 @@ import { useState } from "react";
 function HeroPage() {
   const [categoryId, setCategoryId] = useState(null);
 
+  const handleChangeCategory = (catid) => {
+    console.log("catid ", catid);
+    setCategoryId(catid);
+  };
+
   return (
     <>
-      <MainNavbar setCategoryId={setCategoryId} />
+      <MainNavbar handleChangeCat={handleChangeCategory} />
       <HeroImage />
       <CountTimer />
       <CardItems categoryId={categoryId} />

@@ -15,7 +15,7 @@ import {
   DropdownItem,
 } from "@nextui-org/react";
 import { useForm } from "react-hook-form";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { setCredentials, removeCredentials } from "../features/authSlice";
 import { useLoginMutation } from "../services/authAPI";
 import { useDispatch, useSelector } from "react-redux";
@@ -40,7 +40,7 @@ function LoginForm() {
   const [login, { isLoading, error, isSuccess }] = useLoginMutation();
 
   const dispatch = useDispatch();
-  // const navigateTo = useNavigate();
+  const navigateTo = useNavigate();
 
   const handleLogout = async () => {
     dispatch(removeCredentials());
@@ -54,16 +54,10 @@ function LoginForm() {
   } = useForm();
 
   const handleFormSubmit = async (data) => {
-    console.log("data is a", data);
     const credentials = await login(data).unwrap();
 
     dispatch(setCredentials(credentials));
-    console.log("login is", credentials);
-
-    // navigateTo("/tasks");
   };
-
-  console.log("error  is a", error);
 
   useEffect(() => {
     if (isSuccess) {
@@ -83,11 +77,22 @@ function LoginForm() {
             />
           </DropdownTrigger>
           <DropdownMenu aria-label="Static Actions">
+            <DropdownItem>
+              <span className="text-md font-semibold text-slate-800 uppercase cursor-pointer">
+                {user}
+              </span>
+            </DropdownItem>
+
             <DropdownItem
               className="text-slate-600 font-sans font-semibold"
               color="primary"
             >
-              <span className="text-xs uppercase cursor-pointer">{user}</span>
+              <h2
+                onClick={() => navigateTo("/adminpanel/products")}
+                className="text-xs uppercase cursor-pointer"
+              >
+                Admin Panel
+              </h2>
             </DropdownItem>
 
             <DropdownItem

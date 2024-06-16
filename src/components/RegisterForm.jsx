@@ -28,8 +28,6 @@ function RegisterForm({ closeBox, switchToLogin }) {
     // navigateTo("/");
   };
 
-  console.log("error  is a", error);
-
   return (
     <>
       <form action="" method="POST" onSubmit={handleSubmit(handleFormSubmit)}>

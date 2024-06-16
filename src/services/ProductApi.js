@@ -16,10 +16,14 @@ export const productApi = createApi({
         console.log("query string is a", queryString);
         return queryString;
       },
+
       providesTags: (result) =>
         result
-          ? [...result.map(({ id }) => ({ type: "Product", id })), "Product"]
-          : ["Product"],
+          ? [
+              ...result.map(({ id }) => ({ type: "Product", id })),
+              { type: "Product", id: "LIST" },
+            ]
+          : [{ type: "Product", id: "LIST" }],
     }),
     getProductById: builder.query({
       query: (id) => `products/${id}`,
