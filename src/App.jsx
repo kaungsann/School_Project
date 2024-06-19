@@ -12,7 +12,12 @@ import HomePage from "./pages/HeroPage";
 import PaymentPage from "./pages/PaymentPage";
 import ProductsPage from "./pages/ProductsPage";
 import ProductDetailPage from "./pages/ProductDetailPage";
-import AdminPage from "./pages/AdminPage";
+import AdminProductPage from "./pages/AdminProductPage";
+import ProductForm from "./components/ProductForm";
+import AdminCategoryPage from "./pages/AdminCategoryPage";
+import CategoryForm from "./components/CategoryForm";
+import AdminUserPage from "./pages/AdminUserPage";
+import UserForm from "./components/UserForm";
 
 export default function App() {
   const routeConfig = [
@@ -35,7 +40,30 @@ export default function App() {
       children: [
         {
           path: "products",
-          element: <AdminPage />,
+          element: <AdminProductPage />,
+        },
+        { path: "categories", element: <AdminCategoryPage /> },
+        { path: "users", element: <AdminUserPage /> },
+
+        { path: "products/view/:id", element: <ProductForm mode="View" /> },
+        { path: "products/create", element: <ProductForm mode="Create" /> },
+        { path: "products/edit/:id", element: <ProductForm mode="Edit" /> },
+        { path: "products/delete/:id", element: <ProductForm mode="Delete" /> },
+
+        { path: "category/view/:id", element: <CategoryForm mode="View" /> },
+        { path: "category/create", element: <CategoryForm mode="Create" /> },
+        { path: "category/edit/:id", element: <CategoryForm mode="Edit" /> },
+        {
+          path: "category/delete/:id",
+          element: <CategoryForm mode="Delete" />,
+        },
+
+        { path: "user/view/:id", element: <UserForm mode="View" /> },
+        { path: "user/create", element: <UserForm mode="Create" /> },
+        { path: "user/edit/:id", element: <UserForm mode="Edit" /> },
+        {
+          path: "user/delete/:id",
+          element: <UserForm mode="Delete" />,
         },
       ],
     },

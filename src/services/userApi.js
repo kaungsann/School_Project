@@ -7,16 +7,16 @@ export const userApi = createApi({
   tagTypes: ["User"],
   endpoints: (builder) => ({
     getUsers: builder.query({
-      query: () => "users",
+      query: () => "user",
       providesTags: ["User"],
     }),
     getUserById: builder.query({
-      query: (id) => `users/${id}`,
+      query: (id) => `user/${id}`,
       providesTags: (result, error, arg) => [{ type: "User", id: arg.id }],
     }),
     addUser: builder.mutation({
       query: (user) => ({
-        url: "users",
+        url: "user",
         method: "POST",
         body: user,
       }),
@@ -24,7 +24,7 @@ export const userApi = createApi({
     }),
     updateUser: builder.mutation({
       query: ({ id, ...updates }) => ({
-        url: `users/${id}`,
+        url: `user/${id}`,
         method: "PATCH",
         body: updates,
       }),

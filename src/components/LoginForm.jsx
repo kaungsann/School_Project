@@ -86,13 +86,9 @@ function LoginForm() {
             <DropdownItem
               className="text-slate-600 font-sans font-semibold"
               color="primary"
+              onClick={() => navigateTo("/adminpanel/products")}
             >
-              <h2
-                onClick={() => navigateTo("/adminpanel/products")}
-                className="text-xs uppercase cursor-pointer"
-              >
-                Admin Panel
-              </h2>
+              <h2 className="text-xs uppercase cursor-pointer">Admin Panel</h2>
             </DropdownItem>
 
             <DropdownItem
