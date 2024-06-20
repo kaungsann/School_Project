@@ -5,7 +5,6 @@ import ProductList from "../components/ProductList";
 
 function AdminProductPage() {
   const { data, isLoading, isSuccess, isError, error } = useGetProductsQuery();
-  console.log("product  is  a", data);
   return (
     <>
       <div className="flex justify-between"></div>

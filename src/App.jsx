@@ -18,6 +18,8 @@ import AdminCategoryPage from "./pages/AdminCategoryPage";
 import CategoryForm from "./components/CategoryForm";
 import AdminUserPage from "./pages/AdminUserPage";
 import UserForm from "./components/UserForm";
+import AdminTransitionPage from "./pages/AdminTransitionPage";
+import ViewTransition from "./components/ViewTransition";
 
 export default function App() {
   const routeConfig = [
@@ -45,6 +47,11 @@ export default function App() {
         { path: "categories", element: <AdminCategoryPage /> },
         { path: "users", element: <AdminUserPage /> },
 
+        {
+          path: "transitions",
+          element: <AdminTransitionPage />,
+        },
+
         { path: "products/view/:id", element: <ProductForm mode="View" /> },
         { path: "products/create", element: <ProductForm mode="Create" /> },
         { path: "products/edit/:id", element: <ProductForm mode="Edit" /> },
@@ -64,6 +71,11 @@ export default function App() {
         {
           path: "user/delete/:id",
           element: <UserForm mode="Delete" />,
+        },
+
+        {
+          path: "transition/view/:id",
+          element: <ViewTransition mode="View" />,
         },
       ],
     },

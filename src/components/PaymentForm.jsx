@@ -2,6 +2,7 @@ import shopPay from "../assets/images/shoppay.png";
 import payPay from "../assets/images/paypal.png";
 import { Icon } from "@iconify/react";
 import { calculateSubtotal } from "../utils/cartCountPrice";
+import { useAddTransitionMutation } from "../services/transitionAPI";
 
 import {
   Accordion,
@@ -9,12 +10,26 @@ import {
   Checkbox,
   Select,
   SelectItem,
+  Input,
 } from "@nextui-org/react";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
 
 function PaymentForm() {
   const carts = useSelector((state) => state.cart);
-  console.log("cart  is a", carts);
+
+  const [addPay, { isLoading, error }] = useAddTransitionMutation();
+
+  console.log("cart s is a", carts);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
+  const navigateTo = useNavigate();
+
   const regions = [
     { key: "United State", label: "US" },
     { key: "brunei", label: "Brunei" },
@@ -32,6 +47,41 @@ function PaymentForm() {
   ];
 
   const subtotal = calculateSubtotal(carts);
+
+  const onSubmit = async (data) => {
+    console.log("data is a", data);
+    try {
+      const userId = 2;
+      const paymentData = {
+        userId,
+        shippingInfo: {
+          emailAddress: data.email,
+          region: data.region,
+          name: `${data.firstName} ${data.lastName}`,
+          address: data.address,
+          apartment: data.apartment,
+          city: data.city,
+          postalCode: data.postalCode,
+          phoneNumber: data.phone,
+        },
+        purchasedProductListReqs: carts.map((product) => ({
+          productId: product.id,
+          qty: product.quantity,
+        })),
+        payment: {
+          cardNumber: data.cardNumber,
+          expDate: data.expDate,
+          securityCode: data.securityCode,
+          nameOnCard: data.nameOnCard,
+        },
+      };
+
+      await addPay(paymentData);
+      navigateTo("/");
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return (
     <>
@@ -63,14 +113,20 @@ function PaymentForm() {
             </div>
 
             <section>
-              <form className="p-4 mb-10">
+              <form className="p-4 mb-10" onSubmit={handleSubmit(onSubmit)}>
                 <label className="text-black font-semibold text-xl">
                   Content
                 </label>
-                <input
+
+                <Input
                   type="email"
-                  placeholder="email"
-                  className="px-3 inputLine py-3 w-full mt-3 rounded-md border-1 border-slate-300"
+                  variant="bordered"
+                  {...register("email", {
+                    required: "email is required",
+                  })}
+                  placeholder="example@gmail.com"
+                  aria-labelledby="email"
+                  className="px-3 py-3 w-full mt-3 rounded-md"
                 />
                 <Checkbox
                   defaultSelected
@@ -84,7 +140,6 @@ function PaymentForm() {
                   <label className="text-black font-semibold text-md">
                     Delivery
                   </label>
-
                   <Select
                     isRequired
                     variant="bordered"
@@ -97,50 +152,84 @@ function PaymentForm() {
                       <SelectItem key={re.key}>{re.label}</SelectItem>
                     ))}
                   </Select>
-
                   <div className="flex justify-between mt-4">
-                    <input
+                    <Input
                       type="text"
+                      variant="bordered"
+                      {...register("name", {
+                        required: "name is required",
+                      })}
                       placeholder="First Name"
-                      className="px-3 inputLine w-2/4	py-3 mt-3 rounded-md mr-8 border-1 border-slate-300"
+                      aria-labelledby="First Name"
+                      className="px-3 w-2/4	py-3 mt-3 rounded-md"
                     />
-                    <input
+
+                    <Input
                       type="text"
+                      variant="bordered"
+                      {...register("name", {
+                        required: "name is required",
+                      })}
                       placeholder="Last Name"
-                      className="px-3 inputLine w-2/4	py-3 mt-3 rounded-md border-1 border-slate-300"
+                      aria-labelledby="Last Name"
+                      className="px-3 w-2/4	py-3 mt-3 rounded-md"
                     />
                   </div>
-
-                  <input
+                  <Input
                     type="text"
+                    variant="bordered"
+                    {...register("address", {
+                      required: "address is required",
+                    })}
                     placeholder="Address"
-                    className="px-3 inputLine w-full py-3 rounded-md border-1 border-slate-300 mt-4"
+                    aria-labelledby="Address"
+                    className="px-3 w-full py-3 rounded-md mt-4"
                   />
-
-                  <input
+                  <Input
                     type="text"
+                    variant="bordered"
+                    {...register("apartment", {
+                      required: "apartment is required",
+                    })}
                     placeholder="Apartment,suit,etc(optional)"
-                    className="px-3 inputLine w-full py-3 rounded-md border-1 border-slate-300 mt-4"
+                    aria-labelledby="apartment"
+                    className="px-3 w-full py-3 rounded-md mt-4"
                   />
-
                   <div className="flex justify-between mt-4">
-                    <input
+                    <Input
                       type="text"
-                      placeholder="City"
-                      className="px-3 inputLine w-2/4	py-3 mt-3 rounded-md mr-8 border-1 border-slate-300"
+                      variant="bordered"
+                      {...register("city", {
+                        required: "City is required",
+                      })}
+                      placeholder="city"
+                      aria-labelledby="City"
+                      className="px-3 w-full py-3 rounded-md mt-4"
                     />
-                    <input
+
+                    <Input
                       type="text"
+                      variant="bordered"
+                      {...register("postalCode", {
+                        required: "postalCode is required",
+                      })}
                       placeholder="Postal Code"
-                      className="px-3 inputLine w-2/4	py-3 mt-3 rounded-md border-1 border-slate-300"
+                      aria-labelledby="Postal Code"
+                      className="px-3 w-full py-3 rounded-md mt-4"
                     />
                   </div>
 
-                  <input
-                    type="phone"
-                    placeholder="Phone (optional)"
-                    className="px-3 w-full inputLine py-3 rounded-md border-1 border-slate-300 mt-4"
+                  <Input
+                    type="number"
+                    variant="bordered"
+                    {...register("phoneNumber", {
+                      required: "phoneNumber is required",
+                    })}
+                    placeholder="phoneNumber"
+                    aria-labelledby="phoneNumber"
+                    className="px-3 w-full py-3 rounded-md mt-4"
                   />
+
                   <div className="mt-6">
                     <label className="text-black font-semibold text-xl">
                       Payment
@@ -185,91 +274,57 @@ function PaymentForm() {
                         }
                         className="mt-4"
                       >
-                        <input
+                        <Input
                           type="number"
+                          variant="bordered"
+                          {...register("cardNumber", {
+                            required: "cardNumber is required",
+                          })}
                           placeholder="Card number"
-                          className="px-3 inputLine w-full py-3 rounded-md border-1 border-slate-300 mt-4"
+                          aria-labelledby="Card number"
+                          className="px-3 w-full py-3 rounded-md mt-4"
                         />
+
                         <div className="flex justify-between mt-4">
-                          <input
-                            type="text"
+                          <Input
+                            type="date"
+                            variant="bordered"
+                            {...register("expDate", {
+                              required: "expDate is required",
+                            })}
                             placeholder="Expiration date (MM/YY)"
-                            className="px-3 inputLine w-2/4	py-3 mt-3 rounded-md mr-8 border-1 border-slate-300"
+                            aria-labelledby="Expiration date (MM/YY)"
+                            className="px-3 w-2/4	py-3 mt-3 rounded-md mr-8"
                           />
-                          <input
+
+                          <Input
                             type="number"
+                            variant="bordered"
+                            {...register("securityCode", {
+                              required: "securityCode is required",
+                            })}
                             placeholder="Security code"
-                            className="px-3 inputLine w-2/4	py-3 mt-3 rounded-md border-1 border-slate-300"
+                            aria-labelledby="Security code"
+                            className="px-3 w-2/4	py-3 mt-3 rounded-md mr-8"
                           />
                         </div>
+                        <Input
+                          type="text"
+                          variant="bordered"
+                          {...register("nameOnCard", {
+                            required: "nameOnCard is required",
+                          })}
+                          placeholder="Name on card"
+                          aria-labelledby="Name on card"
+                          className="px-3 w-2/4	py-3 mt-3 rounded-md mr-8"
+                        />
                         <input
                           type="text"
                           placeholder="Name on card"
-                          className="px-3 inputLine w-full py-3 rounded-md border-1 border-slate-300 mt-4"
+                          className="px-3 w-full py-3 rounded-md mt-4"
                         />
-
-                        {/* <div className="mt-4">
-                        <label className="text-black font-semibold text-md">
-                          Billing address
-                        </label>
-
-                        <Select
-                          isRequired
-                          variant="bordered"
-                          label="Country/Region"
-                          className="w-full mt-3"
-                        >
-                          {regions.map((re) => (
-                            <SelectItem key={re.key}>{re.label}</SelectItem>
-                          ))}
-                        </Select>
-
-                        <div className="flex justify-between mt-4">
-                          <input
-                            type="text"
-                            placeholder="First Name"
-                            className="px-3 w-2/4	py-3 mt-3 rounded-md mr-8 border-1 border-slate-300"
-                          />
-                          <input
-                            type="text"
-                            placeholder="Last Name"
-                            className="px-3 w-2/4	py-3 mt-3 rounded-md border-1 border-slate-300"
-                          />
-                        </div>
-
-                        <input
-                          type="text"
-                          placeholder="Address"
-                          className="px-3 w-full py-3 rounded-md border-1 border-slate-300 mt-4"
-                        />
-
-                        <input
-                          type="text"
-                          placeholder="Apartment,suit,etc(optional)"
-                          className="px-3 w-full py-3 rounded-md border-1 border-slate-300 mt-4"
-                        />
-
-                        <div className="flex justify-between mt-4">
-                          <input
-                            type="text"
-                            placeholder="City"
-                            className="px-3 w-2/4	py-3 mt-3 rounded-md mr-8 border-1 border-slate-300"
-                          />
-                          <input
-                            type="text"
-                            placeholder="Postal Code"
-                            className="px-3 w-2/4	py-3 mt-3 rounded-md border-1 border-slate-300"
-                          />
-                        </div>
-
-                        <input
-                          type="phone"
-                          placeholder="Phone (optional)"
-                          className="px-3 w-full py-3 rounded-md border-1 border-slate-300 mt-4"
-                        />
-                      </div> */}
                       </AccordionItem>
-                      <AccordionItem
+                      {/* <AccordionItem
                         aria-label="payBox2"
                         key="2"
                         subtitle={
@@ -294,11 +349,17 @@ function PaymentForm() {
                         <button className="w-full bg-blue-500 mt-4 rounded-md text-white text-bold text-xl text-center py-3">
                           PayPal
                         </button>
-                      </AccordionItem>
+                      </AccordionItem> */}
                     </Accordion>
-                    <button className="w-full bg-[#2F3132] mt-4 rounded-md text-white text-bold text-xl text-center py-3">
+                    {/* <button className="w-full bg-[#2F3132] mt-4 rounded-md text-white text-bold text-xl text-center py-3">
                       Pay Now
-                    </button>
+                    </button> */}
+
+                    <input
+                      type="submit"
+                      value="Pay Now"
+                      className="w-full bg-[#2F3132] mt-4 rounded-md text-white text-bold text-xl text-center py-3"
+                    />
                   </div>
                 </div>
               </form>
@@ -345,22 +406,12 @@ function PaymentForm() {
               <input
                 type="text"
                 placeholder="Discount code or gift card"
-                className="px-3 py-3 w-80 mt-3 rounded-md border-1 border-slate-300"
+                className="px-3 py-3 w-80 mt-3 rounded-md"
               />
               <button className="px-6 py-2.5 ml-3 mt-3 rounded-md bg-slate-300">
                 Apply
               </button>
             </div>
-
-            {/* <div className="flex justify-between items-center">
-              <span className="text-md">Subtotal</span>
-              <span className="text-md font-semibold text-black">$13.98</span>
-            </div>
-
-            <div className="flex justify-between items-center mt-3">
-              <span className="text-md">Shipping</span>
-              <span className="text-md font-semibold text-black">$5.95</span>
-            </div> */}
 
             <div className="flex justify-between items-center mt-8">
               <span className="text-2xl">Total</span>

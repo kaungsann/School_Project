@@ -1,31 +1,26 @@
 import PropTypes from "prop-types";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Select, SelectItem } from "@nextui-org/react";
 
 const CustomSelection = ({
   options = [],
   onChange = (f) => f,
   isLoading = false,
-  defaultValue = null,
+  defaultValue = "",
   disabled = false,
   label = "",
   mode = "",
 }) => {
-  const [selectedOption, setSelectedOption] = useState(defaultValue || "");
+  const [selectedOption, setSelectedOption] = useState("");
 
-  useEffect(() => {
-    if (defaultValue !== null && selectedOption === "") {
-      setSelectedOption(defaultValue);
-    }
-  }, [defaultValue, selectedOption]);
+  console.log("category option is a", options);
+
+  console.log("category defaultValue is a", defaultValue);
 
   const handleSelectChange = (selectedValue) => {
     setSelectedOption(selectedValue);
     onChange(selectedValue);
   };
-
-  console.log("selection in options category is ", options);
-  console.log("selection in options default value is ", defaultValue);
 
   return (
     <>
@@ -33,7 +28,7 @@ const CustomSelection = ({
         radius="md"
         variant="bordered"
         isDisabled={mode === "View" || mode === "Delete"}
-        selectedKeys={[selectedOption]}
+        selectedKeys={selectedOption ? [selectedOption] : []}
         label={label}
         disabled={disabled}
         size="md"
@@ -50,12 +45,8 @@ const CustomSelection = ({
           <SelectItem>Loading...</SelectItem>
         ) : (
           options.map((option) => (
-            <SelectItem
-              key={option.id}
-              value={option.id}
-              className={option.code ? "w-full" : ""}
-            >
-              {option.name + (option.code ? `(${option.code})` : "")}
+            <SelectItem key={option.id} value={option.id}>
+              {option.name}
             </SelectItem>
           ))
         )}
@@ -67,8 +58,8 @@ const CustomSelection = ({
 CustomSelection.propTypes = {
   options: PropTypes.arrayOf(PropTypes.object).isRequired,
   onChange: PropTypes.func.isRequired,
-  isLoading: PropTypes.bool,
-  defaultValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  isLoading: PropTypes.bool.isRequired,
+  defaultValue: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   disabled: PropTypes.bool,
   label: PropTypes.string,
   mode: PropTypes.string,

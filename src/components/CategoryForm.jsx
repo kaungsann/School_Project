@@ -110,7 +110,7 @@ function CategoryForm({ mode }) {
                   size="md"
                   radius="sm"
                   className="mr-2"
-                  onClick={() => navigate("/adminpanel/users")}
+                  onClick={() => navigate("/adminpanel/categories")}
                 >
                   Back
                 </Button>

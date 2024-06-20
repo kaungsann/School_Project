@@ -35,6 +35,7 @@ export default function Sidebar() {
           <div
             className={`flex items-center cursor-pointer py-2 hover:bg-[#414649] hover:text-white ${
               location.pathname === "/adminpanel/categories" ||
+              location.pathname === `/adminpanel/category/view/${id}` ||
               location.pathname === "/adminpanel/category/create" ||
               location.pathname === `/adminpanel/category/edit/${id}` ||
               location.pathname === `/adminpanel/category/delete/${id}` ||
@@ -64,10 +65,11 @@ export default function Sidebar() {
           </div>
         </Link>
 
-        <Link to="/payment-transition">
+        <Link to="/adminpanel/transitions">
           <div
             className={`flex items-center cursor-pointer py-2 hover:bg-[#414649] hover:text-white ${
-              location.pathname === `/adminpanel/payment-transition`
+              location.pathname === "/adminpanel/transitions" ||
+              location.pathname === `/adminpanel/transition/view/${id}`
                 ? "text-white bg-[#414649]" // active class
                 : "text-gray-500" // inactive class
             }`}

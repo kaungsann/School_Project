@@ -22,6 +22,7 @@ import { authApi } from "./services/authAPI";
 import { productApi } from "./services/productApi";
 import { categoryApi } from "./services/categoryApi";
 import { userApi } from "./services/userApi";
+import { transitionApi } from "./services/transitionAPI";
 
 export const resetStore = createAction("RESET_STORE");
 
@@ -38,6 +39,7 @@ const rootReducer = combineReducers({
   [productApi.reducerPath]: productApi.reducer,
   [categoryApi.reducerPath]: categoryApi.reducer,
   [userApi.reducerPath]: userApi.reducer,
+  [transitionApi.reducerPath]: transitionApi.reducer,
 });
 
 const resettableReducer = (state, action) => {
@@ -60,7 +62,8 @@ const store = configureStore({
       authApi.middleware,
       productApi.middleware,
       categoryApi.middleware,
-      userApi.middleware
+      userApi.middleware,
+      transitionApi.middleware
     ),
 });
 

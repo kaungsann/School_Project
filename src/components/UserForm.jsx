@@ -39,13 +39,14 @@ function UserForm({ mode }) {
     reset,
     control,
     watch,
-    setValue,
+
     formState: { isSubmitting, isDirty, isValid },
   } = useForm();
 
   const readOnly = mode === "View" || mode === "Delete" || isSubmitting;
 
   const onSubmit = (data) => {
+    console.log("user datat is a", data);
     switch (mode) {
       case "Create": {
         addUser(data)
@@ -121,7 +122,7 @@ function UserForm({ mode }) {
                   size="md"
                   radius="sm"
                   className="mr-2"
-                  onClick={() => navigate("/adminpanel/categories")}
+                  onClick={() => navigate("/adminpanel/users")}
                 >
                   Back
                 </Button>
@@ -252,29 +253,34 @@ function UserForm({ mode }) {
               )}
             />
 
-            <Select
-              name="status"
-              id="status"
-              variant="bordered"
-              label="Status"
-              labelPlacement="outside"
-              selectedKeys={selectedRole ? [selectedRole] : []}
-              placeholder="Select status"
-              size="md"
-              classNames={{
-                base: "max-w-xs",
-                trigger: "h-10 rounded-md",
-              }}
-              onChange={(e) => setValue("status", e.target.value)}
-              aria-label="Select status"
-            >
-              <SelectItem key="user" value="user">
-                user
-              </SelectItem>
-              <SelectItem key="superuser" value="superuser">
-                superuser
-              </SelectItem>
-            </Select>
+            <Controller
+              control={control}
+              name="role"
+              defaultValue={selectedRole || ""}
+              render={({ field: { onChange, value } }) => (
+                <Select
+                  variant="bordered"
+                  label="Role"
+                  labelPlacement="outside"
+                  selectedKeys={value ? [value] : []}
+                  placeholder="Select role"
+                  size="md"
+                  classNames={{
+                    base: "max-w-xs",
+                    trigger: "h-10 rounded-md",
+                  }}
+                  onChange={(v) => onChange(v)}
+                  aria-label="Select role"
+                >
+                  <SelectItem key="user" value="user">
+                    user
+                  </SelectItem>
+                  <SelectItem key="superuser" value="superuser">
+                    superuser
+                  </SelectItem>
+                </Select>
+              )}
+            />
 
             <Controller
               control={control}

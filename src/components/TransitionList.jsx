@@ -21,14 +21,21 @@ import { useNavigate } from "react-router-dom";
 const columns = [
   { name: "ID", uid: "id", sortable: true },
   { name: "NAME", uid: "name" },
-  { name: "EMAIL", uid: "email" },
-  { name: "ROLE", uid: "role" },
+  { name: "LOCATION", uid: "location" },
+  { name: "PURCHASE", uid: "purchase", sortable: true },
+  { name: "PHONENUMBER", uid: "phonenumber" },
   { name: "ACTIONS", uid: "actions" },
 ];
 
-const INITIAL_VISIBLE_COLUMNS = ["name", "email", "role", "actions"];
+const INITIAL_VISIBLE_COLUMNS = [
+  "name",
+  "location",
+  "purchase",
+  "phonenumber",
+  "actions",
+];
 
-export default function UserList({ users }) {
+export default function TransitionList({ transitons }) {
   const [filterValue, setFilterValue] = React.useState("");
   const [selectedKeys, setSelectedKeys] = React.useState(new Set([]));
   const [visibleColumns, setVisibleColumns] = React.useState(
@@ -41,7 +48,7 @@ export default function UserList({ users }) {
   });
   const [page, setPage] = React.useState(1);
 
-  const pages = Math.ceil(users.length / rowsPerPage);
+  const pages = Math.ceil(transitons.length / rowsPerPage);
 
   const hasSearchFilter = Boolean(filterValue);
   const navigateTo = useNavigate();
@@ -55,7 +62,7 @@ export default function UserList({ users }) {
   }, [visibleColumns]);
 
   const filteredItems = React.useMemo(() => {
-    let filteredCategory = [...users];
+    let filteredCategory = [...transitons];
 
     if (hasSearchFilter) {
       filteredCategory = filteredCategory.filter((ct) =>
@@ -64,7 +71,7 @@ export default function UserList({ users }) {
     }
 
     return filteredCategory;
-  }, [filterValue, hasSearchFilter, users]);
+  }, [filterValue, hasSearchFilter, transitons]);
 
   const items = React.useMemo(() => {
     const start = (page - 1) * rowsPerPage;
@@ -84,33 +91,42 @@ export default function UserList({ users }) {
   }, [sortDescriptor, items]);
 
   const renderCell = React.useCallback(
-    (user, columnKey) => {
-      const cellValue = user[columnKey];
+    (transition, columnKey) => {
+      const cellValue = transition[columnKey];
 
       switch (columnKey) {
         case "name":
           return (
             <div className="flex flex-col">
               <p className="text-bold text-md capitalize text-default-800">
-                {user.firstName + user.lastName}
+                {transition.user.firstName + transition.user.lastName}
               </p>
             </div>
           );
 
-        case "email":
+        case "location":
           return (
             <div className="flex flex-col">
               <p className="text-bold text-sm capitalize text-default-600">
-                {user.email}
+                {transition.shippingInfo.region}
               </p>
             </div>
           );
 
-        case "role":
+        case "phonenumber":
           return (
             <div className="flex flex-col">
               <p className="text-bold text-sm capitalize text-default-600">
-                {user?.role}
+                {transition.shippingInfo.phoneNumber}
+              </p>
+            </div>
+          );
+
+        case "purchase":
+          return (
+            <div className="flex flex-col">
+              <p className="text-bold text-sm capitalize text-default-600">
+                {transition?.purchasedProductLists.length}
               </p>
             </div>
           );
@@ -130,24 +146,12 @@ export default function UserList({ users }) {
                 <DropdownMenu aria-label="Table dropdown menu">
                   <DropdownItem
                     onPress={() => {
-                      navigateTo(`/adminpanel/user/view/${user.id}`);
+                      navigateTo(
+                        `/adminpanel/transition/view/${transition.user.id}`
+                      );
                     }}
                   >
                     View
-                  </DropdownItem>
-                  <DropdownItem
-                    onPress={() => {
-                      navigateTo(`/adminpanel/user/edit/${user.id}`);
-                    }}
-                  >
-                    Edit
-                  </DropdownItem>
-                  <DropdownItem
-                    onPress={() => {
-                      navigateTo(`/adminpanel/user/delete/${user.id}`);
-                    }}
-                  >
-                    Delete
                   </DropdownItem>
                 </DropdownMenu>
               </Dropdown>
@@ -213,13 +217,13 @@ export default function UserList({ users }) {
                 ))}
               </DropdownMenu>
             </Dropdown>
-            {/* <Button
-              onClick={() => navigateTo("/adminpanel/user/create")}
+            <Button
+              onClick={() => navigateTo("/adminpanel/category/create")}
               className="bg-[#414649] text-background"
               size="md"
             >
               Add New
-            </Button> */}
+            </Button>
 
             <Button
               color="secondary"
@@ -234,9 +238,9 @@ export default function UserList({ users }) {
         </div>
         <div className="flex justify-between items-center">
           <div>
-            <h1 className="text-xl font-semibold text-slate-700">Users</h1>
+            <h1 className="text-xl font-semibold text-slate-700">Categories</h1>
             <span className="text-default-400 text-small">
-              Total {users.length}
+              Total {transitons.length}
             </span>
           </div>
 
@@ -259,7 +263,7 @@ export default function UserList({ users }) {
     visibleColumns,
     onSearchChange,
     onRowsPerPageChange,
-    users.length,
+    transitons.length,
     navigateTo,
   ]);
 
@@ -315,7 +319,7 @@ export default function UserList({ users }) {
           </TableColumn>
         )}
       </TableHeader>
-      <TableBody emptyContent={"No users found"} items={sortedItems}>
+      <TableBody emptyContent={"No transitons found"} items={sortedItems}>
         {(item) => (
           <TableRow key={item.id}>
             {(columnKey) => (
@@ -328,6 +332,6 @@ export default function UserList({ users }) {
   );
 }
 
-UserList.propTypes = {
-  users: PropTypes.array.isRequired,
+TransitionList.propTypes = {
+  transitons: PropTypes.array.isRequired,
 };

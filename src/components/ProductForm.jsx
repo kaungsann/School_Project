@@ -22,14 +22,11 @@ import PhotoUploadModal from "./PhotoUploadModal";
 
 function ProductForm({ mode }) {
   const { id } = useParams();
-  const [selectedPhotos, setPhotos] = useState(null);
+  const [selectedPhotos, setPhotos] = useState([]);
 
   const { data: categoriesData, isLoading: isCatLoading } =
     useGetCategoriesQuery();
-
-  const { data, isLoading } = useGetProductByIdQuery(id, {
-    skip: !id,
-  });
+  const { data, isLoading } = useGetProductByIdQuery(id, { skip: !id });
 
   const [updateProduct, { isLoading: isUpdating, error: updateError }] =
     useUpdateProductMutation();
@@ -39,7 +36,6 @@ function ProductForm({ mode }) {
     useAddProductMutation();
 
   const navigate = useNavigate();
-
   const {
     handleSubmit,
     reset,
@@ -52,6 +48,7 @@ function ProductForm({ mode }) {
   const readOnly = mode === "View" || mode === "Delete" || isSubmitting;
 
   const onSubmit = (data) => {
+    console.log("pddata is", data);
     switch (mode) {
       case "Create": {
         addProduct(data)
@@ -89,16 +86,14 @@ function ProductForm({ mode }) {
     }
   };
 
-  const selectedCategory = watch("category", data?.category?.id);
-
-  console.log("selected category", selectedCategory);
+  const selectedCategory = watch("category", data?.category);
 
   useEffect(() => {
     if (data) reset(data);
   }, [data, reset]);
 
   const onClickPhotoHandler = (newPhoto) => {
-    setPhotos(newPhoto);
+    setPhotos([...selectedPhotos, newPhoto]);
   };
 
   return (
@@ -124,7 +119,7 @@ function ProductForm({ mode }) {
           <div className="flex items-center justify-between mb-6">
             <div className="flex justify-between items-center w-full">
               <h1 className="text-xl sm:text-md font-bold text-slate-600">
-                Product -{mode}
+                Product - {mode}
               </h1>
               <div className="flex">
                 <Button
@@ -150,7 +145,7 @@ function ProductForm({ mode }) {
                         isInserting ||
                         isUpdating
                       }
-                      className={`bg-blue-500 ml-4 rounded-md text-white h-10 z-50 px-6 py-1.5 font-semibold  ${
+                      className={`bg-blue-500 ml-4 rounded-md text-white h-10 z-50 px-6 py-1.5 font-semibold ${
                         !isDirty && "cursor-not-allowed bg-orange-300"
                       }`}
                     />
@@ -160,7 +155,7 @@ function ProductForm({ mode }) {
                       type="submit"
                       value="Update"
                       disabled={!isDirty || !isValid}
-                      className={`bg-blue-500 ml-4 rounded-md text-white h-10 z-50 px-6 py-1.5 font-semibold  ${
+                      className={`bg-blue-500 ml-4 rounded-md text-white h-10 z-50 px-6 py-1.5 font-semibold ${
                         !isDirty && "cursor-not-allowed bg-orange-300"
                       }`}
                     />
@@ -169,7 +164,7 @@ function ProductForm({ mode }) {
                     <input
                       type="submit"
                       value="Delete"
-                      className={`bg-red-500 ml-4 rounded-md text-white h-10 z-50 px-6 py-1.5 font-semibold  ${
+                      className={`bg-red-500 ml-4 rounded-md text-white h-10 z-50 px-6 py-1.5 font-semibold ${
                         !isDirty && "cursor-not-allowed bg-orange-300"
                       }`}
                     />
@@ -201,20 +196,35 @@ function ProductForm({ mode }) {
           )}
 
           <div className="my-4">
-            {selectedPhotos ? (
-              <Image
-                radius="sm"
-                src={URL.createObjectURL(selectedPhotos)}
-                alt={`Photo ${data?.name}`}
-                className="h-52 w-60"
-              />
-            ) : data?.image1 ? (
-              <Image
-                radius="sm"
-                src={data?.image1}
-                alt={`Photo ${data?.name}`}
-                className="h-52 w-60"
-              />
+            {selectedPhotos.length > 0 ? (
+              selectedPhotos.map((photo, index) => (
+                <Image
+                  key={index}
+                  radius="sm"
+                  src={URL.createObjectURL(photo)}
+                  alt={`Photo ${data?.name}`}
+                  className="h-52 w-60"
+                />
+              ))
+            ) : data?.image1 || data?.image2 ? (
+              <>
+                {data?.image1 && (
+                  <Image
+                    radius="sm"
+                    src={data?.image1}
+                    alt={`Photo ${data?.name}`}
+                    className="h-52 w-60"
+                  />
+                )}
+                {data?.image2 && (
+                  <Image
+                    radius="sm"
+                    src={data?.image2}
+                    alt={`Photo ${data?.name}`}
+                    className="h-52 w-60"
+                  />
+                )}
+              </>
             ) : (
               <div className="h-52 w-60 bg-gray-200 flex items-center justify-center">
                 <h1>No photo</h1>
