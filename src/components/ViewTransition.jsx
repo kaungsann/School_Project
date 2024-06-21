@@ -29,7 +29,10 @@ function ViewTransition({ mode }) {
         {data?.length > 0 &&
           data.map((info) => (
             <>
-              <div className="flex justify-between items-center w-3/4">
+              <div
+                className="flex justify-between items-center w-3/4"
+                key={info.id}
+              >
                 <span className="text-md font-bold uppercase mb-3 text-slate-600">
                   {(info?.user?.firstName || "").concat(
                     " ",

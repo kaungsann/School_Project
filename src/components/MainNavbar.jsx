@@ -302,8 +302,25 @@ const MainNavbar = ({ handleChangeCat, handleChangeFilter }) => {
             </div>
           </li>
 
-          <li className="ml-10 text-slate-600 font-bold text-md relative flex items-center cursor-pointer">
+          {/* <li className="ml-10 text-slate-600 font-bold text-md relative flex items-center cursor-pointer">
             <span className="underline-effect decoration-2"> Best Sellers</span>
+            {!isScrolled && (
+              <span className="bg-[#2f3132] text-white text-xs px-1.5 py-1 rounded-sm absolute right-1 -top-6">
+                Hot
+                <div className="arrow-down"></div>
+              </span>
+            )}
+          </li> */}
+
+          <li
+            className="ml-10 text-slate-600 font-bold text-md relative flex items-center cursor-pointer"
+            onClick={() =>
+              handleCategoryClick(
+                data?.find((cat) => cat.name === "Best Sellers")?.id
+              )
+            }
+          >
+            <span className="underline-effect decoration-2">Best Sellers</span>
             {!isScrolled && (
               <span className="bg-[#2f3132] text-white text-xs px-1.5 py-1 rounded-sm absolute right-1 -top-6">
                 Hot
@@ -312,7 +329,14 @@ const MainNavbar = ({ handleChangeCat, handleChangeFilter }) => {
             )}
           </li>
 
-          <li className="ml-10 text-slate-600 font-bold text-md relative flex items-center cursor-pointer">
+          <li
+            onClick={() =>
+              handleCategoryClick(
+                data?.find((cat) => cat.name === "Newest Items")?.id
+              )
+            }
+            className="ml-10 text-slate-600 font-bold text-md relative flex items-center cursor-pointer"
+          >
             <span className="underline-effect decoration-2">Newest Items</span>
 
             {!isScrolled && (
@@ -323,9 +347,16 @@ const MainNavbar = ({ handleChangeCat, handleChangeFilter }) => {
             )}
           </li>
 
-          <li className="ml-10 text-slate-600 font-bold text-md relative flex items-center">
+          <li
+            onClick={() =>
+              handleCategoryClick(
+                data?.find((cat) => cat.name === "Accessories")?.id
+              )
+            }
+            className="ml-10 text-slate-600 font-bold text-md relative flex items-center"
+          >
             <span className="underline-effect decoration-from-font cursor-pointer">
-              Bullet Journal
+              Accessories
             </span>
           </li>
 

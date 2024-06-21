@@ -54,8 +54,6 @@ function PaymentForm() {
   const subtotal = calculateSubtotal(carts);
 
   const onSubmit = async (data) => {
-    console.log("data is a", data);
-
     if (!isLoggedIn) {
       toast.info(`You can't proceed with payment before logging in.`);
       return;
@@ -73,7 +71,7 @@ function PaymentForm() {
           apartment: data.apartment,
           city: data.city,
           postalCode: data.postalCode,
-          phoneNumber: data.phone,
+          phoneNumber: data.phoneNumber,
         },
         purchasedProductListReqs: carts.map((product) => ({
           productId: product.id,
@@ -182,6 +180,9 @@ function PaymentForm() {
                     size="lg"
                     className="w-full mt-3"
                     aria-label="region"
+                    {...register("region", {
+                      required: "Region is required",
+                    })}
                   >
                     {regions.map((re) => (
                       <SelectItem key={re.key}>{re.label}</SelectItem>
@@ -267,7 +268,7 @@ function PaymentForm() {
                       required: "phoneNumber is required",
                     })}
                     size="lg"
-                    placeholder="phoneNumber"
+                    placeholder="Phone Number"
                     aria-labelledby="phoneNumber"
                     className="px-3 w-full py-3 rounded-md mt-4"
                   />

@@ -113,7 +113,7 @@ function UserForm({ mode }) {
           <div className="flex items-center justify-between mb-6">
             <div className="flex justify-between items-center w-full">
               <h1 className="text-xl sm:text-md font-bold text-slate-600">
-                Category -{mode}
+                User -{mode}
               </h1>
               <div className="flex">
                 <Button
