@@ -4,10 +4,10 @@ import { Icon } from "@iconify/react";
 
 function CardSlide() {
   const slideImg = [
-    "https://notebooktherapy.com/cdn/shop/files/3.png?v=1613737339",
-    "https://notebooktherapy.com/cdn/shop/files/4.png?v=1613737339",
-    "https://notebooktherapy.com/cdn/shop/files/1_2ca86cdc-679c-480e-888b-b125909f5b10.png?v=1613737339",
-    "https://notebooktherapy.com/cdn/shop/files/2.png?v=1613737339",
+    "https://www.zugucase.com/cdn/shop/products/ZuguGiftCard_1_1024x1024.jpg?v=1638829884",
+    "https://www.zugucase.com/cdn/shop/files/Zugu-Screen-wipe-box-2023-final2_1024x1024.jpg?v=1701709446",
+    "https://www.zugucase.com/cdn/shop/files/product-image-3_d42fbb09-35a2-4ef3-a492-d563e0fa6104_1000x_1_1000x.webp?v=1706881202",
+    "https://www.zugucase.com/cdn/shop/files/ZuguScreenProtector_11-12.9_1.jpg?v=1703801894",
   ];
 
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -83,10 +83,10 @@ function CardSlide() {
       </div>
 
       <div className="relative">
-        <div className="flex justify-center items-center">
+        <div className="flex justify-center items-center p-4">
           <button
             onClick={handlePrevious}
-            className="text-3xl text-slate-600 border-slate-500 border-2 font-semibold w-12 h-12 flex justify-center items-center"
+            className="text-3xl mr-6 text-slate-600 border-slate-500 border-2 font-semibold w-12 h-12 flex justify-center items-center"
           >
             <Icon icon="solar:alt-arrow-left-linear" />
           </button>
@@ -94,24 +94,24 @@ function CardSlide() {
           <img
             src={slideImg[currentIndex]}
             alt={`Slide ${currentIndex + 1}`}
-            className={`w-8/12 h-full object-cover transition-opacity duration-500 ${
+            className={`w-full h-[500px] object-cover transition-opacity duration-500 ${
               isAnimating ? "opacity-0" : "opacity-100"
             }`}
           />
 
           <button
             onClick={handleNext}
-            className="text-3xl text-slate-600 border-2 border-slate-500 font-semibold w-12 h-12 flex justify-center items-center"
+            className="text-3xl ml-6 text-slate-600 border-2 border-slate-500 font-semibold w-12 h-12 flex justify-center items-center"
           >
             <Icon icon="solar:alt-arrow-right-linear" />
           </button>
         </div>
-        <div className="flex justify-center">
+        <div className="flex justify-center mt-6">
           {slideImg.map((_, index) => (
             <span
               key={index}
               onClick={() => handleDotClick(index)}
-              className={`cursor-pointer rounded-full w-4 h-4 ml-2 ${
+              className={`cursor-pointer rounded-full w-3 h-3 ml-2 ${
                 index === currentIndex ? "bg-[#2F3132]" : "bg-slate-300"
               }`}
             ></span>

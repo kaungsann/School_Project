@@ -1,5 +1,4 @@
 import shopPay from "../assets/images/shoppay.png";
-import payPay from "../assets/images/paypal.png";
 import { Icon } from "@iconify/react";
 import { calculateSubtotal } from "../utils/cartCountPrice";
 import { useAddTransitionMutation } from "../services/transitionAPI";
@@ -11,17 +10,23 @@ import {
   Select,
   SelectItem,
   Input,
+  Spinner,
 } from "@nextui-org/react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import { useAuth } from "../hooks/useAuth";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function PaymentForm() {
+  const { isLoggedIn } = useAuth();
+
+  console.log("islogged is a", isLoggedIn);
   const carts = useSelector((state) => state.cart);
 
   const [addPay, { isLoading, error }] = useAddTransitionMutation();
 
-  console.log("cart s is a", carts);
   const {
     register,
     handleSubmit,
@@ -50,6 +55,12 @@ function PaymentForm() {
 
   const onSubmit = async (data) => {
     console.log("data is a", data);
+
+    if (!isLoggedIn) {
+      toast.info(`You can't proceed with payment before logging in.`);
+      return;
+    }
+
     try {
       const userId = 2;
       const paymentData = {
@@ -82,9 +93,27 @@ function PaymentForm() {
       console.log(err);
     }
   };
-
   return (
     <>
+      <ToastContainer
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
+      {isLoading && (
+        <Spinner
+          size="lg"
+          className="flex justify-center items-center w-full h-screen absolute top-0 bottom-0 right-0 left-0"
+        />
+      )}
+      {error && <p className="text-danger">{error?.error}</p>}
       <div className="flex justify-between">
         <div className="w-3/5 mt-12 relative">
           <div className="w-3/4 absolute right-0">
@@ -117,20 +146,25 @@ function PaymentForm() {
                 <label className="text-black font-semibold text-xl">
                   Content
                 </label>
-
+                {errors.email && (
+                  <p className="text-red-600 font-semibold text-xs my-1">
+                    {errors.email.message}
+                  </p>
+                )}
                 <Input
                   type="email"
                   variant="bordered"
                   {...register("email", {
                     required: "email is required",
                   })}
+                  size="lg"
                   placeholder="example@gmail.com"
                   aria-labelledby="email"
                   className="px-3 py-3 w-full mt-3 rounded-md"
                 />
                 <Checkbox
                   defaultSelected
-                  size="md"
+                  size="lg"
                   className="bg[#dc6ace] mt-2"
                 >
                   Send me updates + new product launches
@@ -145,6 +179,7 @@ function PaymentForm() {
                     variant="bordered"
                     label="Country/Region"
                     id="country"
+                    size="lg"
                     className="w-full mt-3"
                     aria-label="region"
                   >
@@ -159,6 +194,7 @@ function PaymentForm() {
                       {...register("name", {
                         required: "name is required",
                       })}
+                      size="lg"
                       placeholder="First Name"
                       aria-labelledby="First Name"
                       className="px-3 w-2/4	py-3 mt-3 rounded-md"
@@ -170,6 +206,7 @@ function PaymentForm() {
                       {...register("name", {
                         required: "name is required",
                       })}
+                      size="lg"
                       placeholder="Last Name"
                       aria-labelledby="Last Name"
                       className="px-3 w-2/4	py-3 mt-3 rounded-md"
@@ -181,6 +218,7 @@ function PaymentForm() {
                     {...register("address", {
                       required: "address is required",
                     })}
+                    size="lg"
                     placeholder="Address"
                     aria-labelledby="Address"
                     className="px-3 w-full py-3 rounded-md mt-4"
@@ -191,6 +229,7 @@ function PaymentForm() {
                     {...register("apartment", {
                       required: "apartment is required",
                     })}
+                    size="lg"
                     placeholder="Apartment,suit,etc(optional)"
                     aria-labelledby="apartment"
                     className="px-3 w-full py-3 rounded-md mt-4"
@@ -202,6 +241,7 @@ function PaymentForm() {
                       {...register("city", {
                         required: "City is required",
                       })}
+                      size="lg"
                       placeholder="city"
                       aria-labelledby="City"
                       className="px-3 w-full py-3 rounded-md mt-4"
@@ -213,6 +253,7 @@ function PaymentForm() {
                       {...register("postalCode", {
                         required: "postalCode is required",
                       })}
+                      size="lg"
                       placeholder="Postal Code"
                       aria-labelledby="Postal Code"
                       className="px-3 w-full py-3 rounded-md mt-4"
@@ -225,6 +266,7 @@ function PaymentForm() {
                     {...register("phoneNumber", {
                       required: "phoneNumber is required",
                     })}
+                    size="lg"
                     placeholder="phoneNumber"
                     aria-labelledby="phoneNumber"
                     className="px-3 w-full py-3 rounded-md mt-4"
@@ -280,6 +322,7 @@ function PaymentForm() {
                           {...register("cardNumber", {
                             required: "cardNumber is required",
                           })}
+                          size="lg"
                           placeholder="Card number"
                           aria-labelledby="Card number"
                           className="px-3 w-full py-3 rounded-md mt-4"
@@ -292,6 +335,7 @@ function PaymentForm() {
                             {...register("expDate", {
                               required: "expDate is required",
                             })}
+                            size="lg"
                             placeholder="Expiration date (MM/YY)"
                             aria-labelledby="Expiration date (MM/YY)"
                             className="px-3 w-2/4	py-3 mt-3 rounded-md mr-8"
@@ -303,6 +347,7 @@ function PaymentForm() {
                             {...register("securityCode", {
                               required: "securityCode is required",
                             })}
+                            size="lg"
                             placeholder="Security code"
                             aria-labelledby="Security code"
                             className="px-3 w-2/4	py-3 mt-3 rounded-md mr-8"
@@ -314,6 +359,7 @@ function PaymentForm() {
                           {...register("nameOnCard", {
                             required: "nameOnCard is required",
                           })}
+                          size="lg"
                           placeholder="Name on card"
                           aria-labelledby="Name on card"
                           className="px-3 w-2/4	py-3 mt-3 rounded-md mr-8"
@@ -351,9 +397,6 @@ function PaymentForm() {
                         </button>
                       </AccordionItem> */}
                     </Accordion>
-                    {/* <button className="w-full bg-[#2F3132] mt-4 rounded-md text-white text-bold text-xl text-center py-3">
-                      Pay Now
-                    </button> */}
 
                     <input
                       type="submit"

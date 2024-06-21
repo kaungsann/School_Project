@@ -1,7 +1,7 @@
 import MainNavbar from "../components/MainNavbar";
 import Footer from "../components/Footer";
 import HeroImage from "../components/HeroImage";
-import CountTimer from "../components/CountTimer";
+import PromoteText from "../components/PromoteText";
 import CardItems from "../components/CardItems";
 import Blogs from "../components/Blogs";
 import CardSlide from "../components/CardSlide";
@@ -27,15 +27,24 @@ function HeroPage() {
         handleChangeFilter={handleChangeFilter}
       />
       <HeroImage />
-      <CountTimer />
+      <PromoteText />
       <CardItems categoryId={categoryId} filterValue={filterValue} />
       <CardSlide />
 
-      <img
-        alt="Illustration of a person designing a website on a computer"
-        className="w-full h-[600px] my-6"
-        src="https://cdn.shopify.com/s/files/1/0070/7032/files/best-ecommerce-website-builders_34936283-c28e-41b7-89a9-2d94ce67b509.jpg?v=1691009868"
-      ></img>
+      <div className="bg-[#F7F2F0] h-96 w-full p-8 flex flex-col my-8 justify-center items-center">
+        <h4 className="text-[#51200B] text-5xl font-sans font-semibold w-3/4 text-center">
+          Get tailored discounts, services, and tools for your business stage.
+        </h4>
+        <p className="text-slate-600 text-2xl my-6 w-3/4 text-center">
+          Grow with curated benefits offered by the free zugo.com Membership,
+          whether you are a small business needing the essentials to start
+          sourcing or a well-established enterprise looking for tools and
+          solutions for more complex orders.
+        </p>
+        <span className="text-slate-800 text-lg font-semibold underline cursor-pointer">
+          Learn More
+        </span>
+      </div>
       <Blogs />
 
       <Footer />

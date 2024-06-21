@@ -2,6 +2,8 @@ import PropTypes from "prop-types";
 import { useGetTransitionByIdQuery } from "../services/transitionAPI";
 import { useNavigate, useParams } from "react-router-dom";
 import { Button, Image, Input, Spinner, Textarea } from "@nextui-org/react";
+import { PDFDownloadLink } from "@react-pdf/renderer";
+import TransitionReport from "./TransitionReport ";
 
 function ViewTransition({ mode }) {
   const { id } = useParams();
@@ -43,14 +45,21 @@ function ViewTransition({ mode }) {
                     Back
                   </Button>
 
-                  <Button
-                    color="primary"
-                    variant="ghost"
-                    size="md"
-                    className="hover:text-white text-[#414649]"
+                  <PDFDownloadLink
+                    document={<TransitionReport data={info} />}
+                    fileName="transition_report.pdf"
                   >
-                    Report
-                  </Button>
+                    {({ loading }) => (
+                      <Button
+                        color="primary"
+                        variant="ghost"
+                        size="md"
+                        className="hover:text-white text-[#414649]"
+                      >
+                        {loading ? "Generating PDF..." : "Report"}
+                      </Button>
+                    )}
+                  </PDFDownloadLink>
                 </div>
               </div>
 

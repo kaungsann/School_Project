@@ -329,7 +329,7 @@ const MainNavbar = ({ handleChangeCat, handleChangeFilter }) => {
             </span>
           </li>
 
-          <li className="ml-10 text-slate-600 font-bold text-md relative flex items-center cursor-pointer">
+          {/* <li className="ml-10 text-slate-600 font-bold text-md relative flex items-center cursor-pointer">
             <span className="underline-effect decoration-2">Tsuki</span>
             <Icon
               icon="entypo:moon"
@@ -340,7 +340,7 @@ const MainNavbar = ({ handleChangeCat, handleChangeFilter }) => {
           <li className="ml-10 text-slate-600 font-bold text-md flex items-center relative cursor-pointer">
             <span className="underline-effect decoration-2">Hinaki</span>
             <Icon icon="bxs:tree" className="text-lg text-green-500 ml-1.5" />
-          </li>
+          </li> */}
 
           <li
             className={`ml-10 flex items-center  ${
