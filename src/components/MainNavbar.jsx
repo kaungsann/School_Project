@@ -8,10 +8,6 @@ import {
   useDisclosure,
   Input,
   Spinner,
-  // Dropdown,
-  // DropdownTrigger,
-  // DropdownMenu,
-  // DropdownItem,
 } from "@nextui-org/react";
 import PropTypes from "prop-types";
 import { useSelector } from "react-redux";
@@ -20,7 +16,6 @@ import "../App.css";
 import { useEffect, useState } from "react";
 import SelectedItemsBox from "../components/SelectedItemsBox";
 import { useGetCategoriesQuery } from "../services/categoryApi";
-
 import LoginForm from "./LoginForm";
 
 const MainNavbar = ({ handleChangeCat, handleChangeFilter }) => {
@@ -302,16 +297,6 @@ const MainNavbar = ({ handleChangeCat, handleChangeFilter }) => {
             </div>
           </li>
 
-          {/* <li className="ml-10 text-slate-600 font-bold text-md relative flex items-center cursor-pointer">
-            <span className="underline-effect decoration-2"> Best Sellers</span>
-            {!isScrolled && (
-              <span className="bg-[#2f3132] text-white text-xs px-1.5 py-1 rounded-sm absolute right-1 -top-6">
-                Hot
-                <div className="arrow-down"></div>
-              </span>
-            )}
-          </li> */}
-
           <li
             className="ml-10 text-slate-600 font-bold text-md relative flex items-center cursor-pointer"
             onClick={() =>
@@ -360,29 +345,16 @@ const MainNavbar = ({ handleChangeCat, handleChangeFilter }) => {
             </span>
           </li>
 
-          {/* <li className="ml-10 text-slate-600 font-bold text-md relative flex items-center cursor-pointer">
-            <span className="underline-effect decoration-2">Tsuki</span>
-            <Icon
-              icon="entypo:moon"
-              className="text-lg text-yellow-500 ml-1.5"
-            />
-          </li>
-
-          <li className="ml-10 text-slate-600 font-bold text-md flex items-center relative cursor-pointer">
-            <span className="underline-effect decoration-2">Hinaki</span>
-            <Icon icon="bxs:tree" className="text-lg text-green-500 ml-1.5" />
-          </li> */}
-
           <li
             className={`ml-10 flex items-center  ${
               seasonOpenBox ? "underline decoration-4" : ""
             }`}
             onMouseEnter={handleSeasonMenuOpen}
             onMouseLeave={handleSeasonMenuClose}
-            aria-label="seasonal-lunch"
+            aria-label="seasonal-promo"
           >
             <span className="text-slate-600 font-bold cursor-pointer text-md">
-              Seasonal Launch
+              Seasonal Promotions
             </span>
 
             {seasonOpenBox && (
@@ -390,98 +362,98 @@ const MainNavbar = ({ handleChangeCat, handleChangeFilter }) => {
                 <section className="grid grid-cols-4 gap-8 w-full pt-4">
                   <div>
                     <ol>
-                      <li className="mb-8 text-md font-sans font-semibold cursor-pointer hover:text-pink-300">
-                        Summer in Italy 🍋
+                      <li className="mb-8 text-md font-sans font-semibold cursor-pointer hover:text-blue-600">
+                        Summer Sale ☀️
                       </li>
-                      <li className="mb-8 text-md font-sans font-semibold cursor-pointer hover:text-pink-300">
-                        Otter Friends 🦦
+                      <li className="mb-8 text-md font-sans font-semibold cursor-pointer hover:text-blue-600">
+                        Back to School 📚
                       </li>
-                      <li className="mb-8 text-md font-sans font-semibold cursor-pointer hover:text-pink-300">
-                        Sakura Days 🌸
+                      <li className="mb-8 text-md font-sans font-semibold cursor-pointer hover:text-blue-600">
+                        Holiday Deals 🎁
                       </li>
-                      <li className="mb-8 text-md font-sans font-semibold cursor-pointer hover:text-pink-300">
-                        Neko Days 🐈
+                      <li className="mb-8 text-md font-sans font-semibold cursor-pointer hover:text-blue-600">
+                        New Year Offers 🎉
                       </li>
-                      <li className="mb-8 text-md font-sans font-semibold cursor-pointer hover:text-pink-300">
-                        Dried Flowers Collection 🥀
+                      <li className="mb-8 text-md font-sans font-semibold cursor-pointer hover:text-blue-600">
+                        Spring Refresh 🌸
                       </li>
-                      <li className="mb-8 text-md font-sans font-semibold cursor-pointer hover:text-pink-300">
-                        Junk Journal 💐
+                      <li className="mb-8 text-md font-sans font-semibold cursor-pointer hover:text-blue-600">
+                        Clearance Sale 🛒
                       </li>
-                      <li className="mb-8 text-md font-sans font-semibold cursor-pointer hover:text-pink-300">
-                        s Lunar Mystery 🔮
-                      </li>
-                    </ol>
-                  </div>
-                  <div>
-                    <ol>
-                      <li className="mb-8 text-md font-sans font-semibold cursor-pointer hover:text-pink-300">
-                        Maple Journey 🍁{" "}
-                      </li>
-                      <li className="mb-8 text-md font-sans font-semibold cursor-pointer hover:text-pink-300">
-                        Sweet Ballet 🩰{" "}
-                      </li>
-                      <li className="mb-8 text-md font-sans font-semibold cursor-pointer hover:text-pink-300">
-                        Midsummer Nights Dream 🌞{" "}
-                      </li>
-                      <li className="mb-8 text-md font-sans font-semibold cursor-pointer hover:text-pink-300">
-                        Paris Collection 🇫🇷{" "}
-                      </li>
-                      <li className="mb-8 text-md font-sans font-semibold cursor-pointer hover:text-pink-300">
-                        Sakura Breeze 🌸{" "}
-                      </li>
-                      <li className="mb-8 text-md font-sans font-semibold cursor-pointer hover:text-pink-300">
-                        Love Lock 🗝{" "}
-                      </li>
-                      <li className="mb-8 text-md font-sans font-semibold cursor-pointer hover:text-pink-300">
-                        Vintage Rose 🥀{" "}
+                      <li className="mb-8 text-md font-sans font-semibold cursor-pointer hover:text-blue-600">
+                        Tech Trends 🔌
                       </li>
                     </ol>
                   </div>
                   <div>
                     <ol>
-                      <li className="mb-8 text-md font-sans font-semibold cursor-pointer hover:text-pink-300">
-                        Moonlit Alchemy 🔮{" "}
+                      <li className="mb-8 text-md font-sans font-semibold cursor-pointer hover:text-blue-600">
+                        Gaming Gear 🎮
                       </li>
-                      <li className="mb-8 text-md font-sans font-semibold cursor-pointer hover:text-pink-300">
-                        Academia Collection 🖤{" "}
+                      <li className="mb-8 text-md font-sans font-semibold cursor-pointer hover:text-blue-600">
+                        Smart Home 🏠
                       </li>
-                      <li className="mb-8 text-md font-sans font-semibold cursor-pointer hover:text-pink-300">
-                        Sights of Japan Collection 🗼{" "}
+                      <li className="mb-8 text-md font-sans font-semibold cursor-pointer hover:text-blue-600">
+                        Mobile Madness 📱
                       </li>
-                      <li className="mb-8 text-md font-sans font-semibold cursor-pointer hover:text-pink-300">
-                        Cottage Friends 🐻{" "}
+                      <li className="mb-8 text-md font-sans font-semibold cursor-pointer hover:text-blue-600">
+                        Laptop Deals 💻
                       </li>
-                      <li className="mb-8 text-md font-sans font-semibold cursor-pointer hover:text-pink-300">
-                        Moonflower Collection 🕊️{" "}
+                      <li className="mb-8 text-md font-sans font-semibold cursor-pointer hover:text-blue-600">
+                        Audio Essentials 🎧
                       </li>
-                      <li className="mb-8 text-md font-sans font-semibold cursor-pointer hover:text-pink-300">
-                        Happy Day Collection 👧🏻{" "}
+                      <li className="mb-8 text-md font-sans font-semibold cursor-pointer hover:text-blue-600">
+                        Wearable Tech ⌚
                       </li>
-                      <li className="mb-8 text-md font-sans font-semibold cursor-pointer hover:text-pink-300">
-                        Tea Party Collection 🍵{" "}
+                      <li className="mb-8 text-md font-sans font-semibold cursor-pointer hover:text-blue-600">
+                        Camera Sale 📷
                       </li>
                     </ol>
                   </div>
                   <div>
                     <ol>
-                      <li className="mb-8 text-md font-sans font-semibold cursor-pointer hover:text-pink-300">
-                        Cloud Dreamland ☁️{" "}
+                      <li className="mb-8 text-md font-sans font-semibold cursor-pointer hover:text-blue-600">
+                        Home Office 🖥️
                       </li>
-                      <li className="mb-8 text-md font-sans font-semibold cursor-pointer hover:text-pink-300">
-                        Ocean Collection 🌊{" "}
+                      <li className="mb-8 text-md font-sans font-semibold cursor-pointer hover:text-blue-600">
+                        Fitness Tech 🏋️
                       </li>
-                      <li className="mb-8 text-md font-sans font-semibold cursor-pointer hover:text-pink-300">
-                        Four Seasons Collection 🐰{" "}
+                      <li className="mb-8 text-md font-sans font-semibold cursor-pointer hover:text-blue-600">
+                        Travel Gadgets 🌍
                       </li>
-                      <li className="mb-8 text-md font-sans font-semibold cursor-pointer hover:text-pink-300">
-                        Maple Dreams Collection 🍁{" "}
+                      <li className="mb-8 text-md font-sans font-semibold cursor-pointer hover:text-blue-600">
+                        Eco-Friendly 🌿
                       </li>
-                      <li className="mb-8 text-md font-sans font-semibold cursor-pointer hover:text-pink-300">
-                        Moonlit Spells 🔮{" "}
+                      <li className="mb-8 text-md font-sans font-semibold cursor-pointer hover:text-blue-600">
+                        Kitchen Tech 🍴
                       </li>
-                      <li className="mb-8 text-md font-sans font-semibold cursor-pointer hover:text-pink-300">
-                        Floral Collection 💐{" "}
+                      <li className="mb-8 text-md font-sans font-semibold cursor-pointer hover:text-blue-600">
+                        VR/AR Experiences 🌐
+                      </li>
+                      <li className="mb-8 text-md font-sans font-semibold cursor-pointer hover:text-blue-600">
+                        Networking 🛜
+                      </li>
+                    </ol>
+                  </div>
+                  <div>
+                    <ol>
+                      <li className="mb-8 text-md font-sans font-semibold cursor-pointer hover:text-blue-600">
+                        Outdoor Tech 🏞️
+                      </li>
+                      <li className="mb-8 text-md font-sans font-semibold cursor-pointer hover:text-blue-600">
+                        Luxury Electronics 💎
+                      </li>
+                      <li className="mb-8 text-md font-sans font-semibold cursor-pointer hover:text-blue-600">
+                        Robotics 🤖
+                      </li>
+                      <li className="mb-8 text-md font-sans font-semibold cursor-pointer hover:text-blue-600">
+                        Drone Deals 🚁
+                      </li>
+                      <li className="mb-8 text-md font-sans font-semibold cursor-pointer hover:text-blue-600">
+                        Entertainment Systems 🎬
+                      </li>
+                      <li className="mb-8 text-md font-sans font-semibold cursor-pointer hover:text-blue-600">
+                        Car Tech 🚗
                       </li>
                     </ol>
                   </div>

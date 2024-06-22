@@ -26,7 +26,7 @@ import { useEffect } from "react";
 
 function LoginForm() {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { user } = useSelector((state) => state.auth);
+  const { user, role } = useSelector((state) => state.auth);
 
   //useDispatch // redux items to update
   //useSelector // redux store to show items
@@ -83,13 +83,17 @@ function LoginForm() {
               </span>
             </DropdownItem>
 
-            <DropdownItem
-              className="text-slate-600 font-sans font-semibold"
-              color="primary"
-              onClick={() => navigateTo("/adminpanel/products")}
-            >
-              <h2 className="text-xs uppercase cursor-pointer">Admin Panel</h2>
-            </DropdownItem>
+            {role === "superuser" && (
+              <DropdownItem
+                className="text-slate-600 font-sans font-semibold"
+                color="primary"
+                onClick={() => navigateTo("/adminpanel/products")}
+              >
+                <h2 className="text-xs uppercase cursor-pointer">
+                  Admin Panel
+                </h2>
+              </DropdownItem>
+            )}
 
             <DropdownItem
               onClick={handleLogout}

@@ -30,7 +30,6 @@ function CategoryForm({ mode }) {
     handleSubmit,
     reset,
     control,
-
     formState: { isSubmitting, isDirty, isValid },
   } = useForm();
 

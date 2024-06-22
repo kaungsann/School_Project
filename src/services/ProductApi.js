@@ -14,7 +14,6 @@ export const productApi = createApi({
         if (categoryId) {
           queryString += `/category/${categoryId}`;
         }
-        console.log("query string is a", queryString);
         return queryString;
       },
 
@@ -27,10 +26,10 @@ export const productApi = createApi({
           : [{ type: "Product", id: "LIST" }],
     }),
     addProduct: builder.mutation({
-      query: (pd) => ({
+      query: (formData) => ({
         url: "products/save",
         method: "POST",
-        body: pd,
+        body: formData,
       }),
       invalidatesTags: ["Product"],
     }),

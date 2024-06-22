@@ -1,21 +1,29 @@
 import PropTypes from "prop-types";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Select, SelectItem } from "@nextui-org/react";
 
 const CustomSelection = ({
   options = [],
   onChange = (f) => f,
   isLoading = false,
-  defaultValue = "",
+  defaultValue = null,
   disabled = false,
   label = "",
   mode = "",
 }) => {
   const [selectedOption, setSelectedOption] = useState("");
 
-  console.log("category option is a", options);
+  // console.log("category option is a", options);
 
-  console.log("category defaultValue is a", defaultValue);
+  // console.log("category defaultValue is a", defaultValue);
+
+  // console.log("select category is a", typeof selectedOption);
+
+  useEffect(() => {
+    if (defaultValue) {
+      setSelectedOption(defaultValue.id.toString());
+    }
+  }, [defaultValue]);
 
   const handleSelectChange = (selectedValue) => {
     setSelectedOption(selectedValue);
@@ -56,10 +64,10 @@ const CustomSelection = ({
 };
 
 CustomSelection.propTypes = {
-  options: PropTypes.arrayOf(PropTypes.object).isRequired,
+  options: PropTypes.array.isRequired,
   onChange: PropTypes.func.isRequired,
   isLoading: PropTypes.bool.isRequired,
-  defaultValue: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+  defaultValue: PropTypes.object,
   disabled: PropTypes.bool,
   label: PropTypes.string,
   mode: PropTypes.string,

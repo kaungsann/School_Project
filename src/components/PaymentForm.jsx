@@ -20,7 +20,9 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 function PaymentForm() {
-  const { isLoggedIn } = useAuth();
+  const { isLoggedIn, id } = useAuth();
+
+  console.log("user id is a", id);
 
   console.log("islogged is a", isLoggedIn);
   const carts = useSelector((state) => state.cart);
@@ -60,9 +62,8 @@ function PaymentForm() {
     }
 
     try {
-      const userId = 2;
       const paymentData = {
-        userId,
+        userId: id,
         shippingInfo: {
           emailAddress: data.email,
           region: data.region,
@@ -434,7 +435,7 @@ function PaymentForm() {
 
                   <div className="w-3/5">
                     <h2 className="text-slate-800 text-sm font-semibold">
-                      {cart.title}
+                      {cart.name}
                     </h2>
                   </div>
 

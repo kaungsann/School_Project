@@ -22,7 +22,10 @@ import PhotoUploadModal from "./PhotoUploadModal";
 
 function ProductForm({ mode }) {
   const { id } = useParams();
-  const [selectedPhotos, setPhotos] = useState([]);
+  const [selectedPhotos, setSelectedPhotos] = useState({
+    image1: null,
+    image2: null,
+  });
 
   const { data: categoriesData, isLoading: isCatLoading } =
     useGetCategoriesQuery();
@@ -47,11 +50,38 @@ function ProductForm({ mode }) {
 
   const readOnly = mode === "View" || mode === "Delete" || isSubmitting;
 
-  const onSubmit = (data) => {
-    console.log("pddata is", data);
+  const onSubmit = (formData) => {
+    // const productData = {
+    //   ...formData,
+    //   image1: selectedPhotos.image1 || data?.image1,
+    //   image2: selectedPhotos.image2 || data?.image2,
+    // };
+
+    console.log("formDataToSend product is", formData);
+    const formDataToSend = new FormData();
+    formDataToSend.append("name", formData.name);
+    formDataToSend.append("categoryId", formData.categoryId);
+    formDataToSend.append("price", formData.price);
+    formDataToSend.append("stock", formData.stock);
+    formDataToSend.append("description", formData.description);
+
+    if (selectedPhotos.image1) {
+      formDataToSend.append("image1", selectedPhotos.image1);
+    } else if (data?.image1) {
+      formDataToSend.append("image1", data.image1);
+    }
+
+    if (selectedPhotos.image2) {
+      formDataToSend.append("image2", selectedPhotos.image2);
+    } else if (data?.image2) {
+      formDataToSend.append("image2", data.image2);
+    }
+
+    console.log("formDataToSend product is", formDataToSend);
+
     switch (mode) {
       case "Create": {
-        addProduct(data)
+        addProduct(formDataToSend)
           .unwrap()
           .then(() => {
             navigate("/adminpanel/products");
@@ -62,9 +92,11 @@ function ProductForm({ mode }) {
         break;
       }
       case "Edit": {
-        updateProduct(data)
+        // updateProduct({ id, ...formDataToSend })
+        updateProduct({ id, ...Object.fromEntries(formDataToSend) })
           .unwrap()
-          .then(() => {
+          .then((response) => {
+            console.log("Update success:", response);
             navigate("/adminpanel/products");
           })
           .catch((err) => {
@@ -88,12 +120,16 @@ function ProductForm({ mode }) {
 
   const selectedCategory = watch("category", data?.category);
 
+  // console.log("product dat is a", data);
+
+  // console.log("cat dat is a", categoriesData);
+
   useEffect(() => {
     if (data) reset(data);
   }, [data, reset]);
 
-  const onClickPhotoHandler = (newPhoto) => {
-    setPhotos([...selectedPhotos, newPhoto]);
+  const onClickPhotoHandler = (newPhoto, photoType) => {
+    setSelectedPhotos((prev) => ({ ...prev, [photoType]: newPhoto }));
   };
 
   return (
@@ -194,47 +230,65 @@ function ProductForm({ mode }) {
               className="my-2"
             />
           )}
-
-          <div className="my-4">
-            {selectedPhotos.length > 0 ? (
-              selectedPhotos.map((photo, index) => (
+          <div className="my-4 flex">
+            <div className="mr-6 ">
+              {selectedPhotos.image1 ? (
                 <Image
-                  key={index}
                   radius="sm"
-                  src={URL.createObjectURL(photo)}
+                  src={URL.createObjectURL(selectedPhotos.image1)}
                   alt={`Photo ${data?.name}`}
                   className="h-52 w-60"
                 />
-              ))
-            ) : data?.image1 || data?.image2 ? (
-              <>
-                {data?.image1 && (
-                  <Image
-                    radius="sm"
-                    src={data?.image1}
-                    alt={`Photo ${data?.name}`}
-                    className="h-52 w-60"
-                  />
-                )}
-                {data?.image2 && (
-                  <Image
-                    radius="sm"
-                    src={data?.image2}
-                    alt={`Photo ${data?.name}`}
-                    className="h-52 w-60"
-                  />
-                )}
-              </>
-            ) : (
-              <div className="h-52 w-60 bg-gray-200 flex items-center justify-center">
-                <h1>No photo</h1>
-              </div>
-            )}
-            {!readOnly && (
-              <PhotoUploadModal
-                onActionConfirm={(photo) => onClickPhotoHandler(photo)}
-              />
-            )}
+              ) : data?.image1 ? (
+                <Image
+                  radius="sm"
+                  src={data?.image1}
+                  alt={`Photo ${data?.name}`}
+                  className="h-52 w-60"
+                />
+              ) : (
+                <div className="h-52 w-60 bg-gray-200 flex items-center justify-center">
+                  <h1>No photo</h1>
+                </div>
+              )}
+              {!readOnly && (
+                <PhotoUploadModal
+                  text="Upload Image 1"
+                  onActionConfirm={(photo) =>
+                    onClickPhotoHandler(photo, "image1")
+                  }
+                />
+              )}
+            </div>
+            <div>
+              {selectedPhotos.image2 ? (
+                <Image
+                  radius="sm"
+                  src={URL.createObjectURL(selectedPhotos.image2)}
+                  alt={`Photo ${data?.name}`}
+                  className="h-52 w-60"
+                />
+              ) : data?.image2 ? (
+                <Image
+                  radius="sm"
+                  src={data?.image2}
+                  alt={`Photo ${data?.name}`}
+                  className="h-52 w-60"
+                />
+              ) : (
+                <div className="h-52 w-60 bg-gray-200 flex items-center justify-center">
+                  <h1>No photo</h1>
+                </div>
+              )}
+              {!readOnly && (
+                <PhotoUploadModal
+                  text="Upload Image 2"
+                  onActionConfirm={(photo) =>
+                    onClickPhotoHandler(photo, "image2")
+                  }
+                />
+              )}
+            </div>
           </div>
 
           <div className="grid sm:grid-cols-1 md:grid-cols-3 xl:grid-cols-3 gap-3 mb-6 w-3/4">
@@ -261,7 +315,7 @@ function ProductForm({ mode }) {
 
             <CustomSelection
               options={categoriesData}
-              onChange={(v) => setValue("category", v)}
+              onChange={(v) => setValue("categoryId", v)}
               isLoading={isCatLoading}
               defaultValue={selectedCategory}
               disabled={readOnly}

@@ -187,7 +187,7 @@ function ViewTransition({ mode }) {
                 <div>
                   {info?.purchasedProductLists?.map((item) => (
                     <>
-                      <div className="flex mb-6 w-full">
+                      <div className="flex mb-6 w-full" key={item.id}>
                         <Image
                           isZoomed
                           width={240}

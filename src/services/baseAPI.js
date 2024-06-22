@@ -5,6 +5,7 @@ const baseQueryWithReauth = fetchBaseQuery({
   baseUrl: BASE_URL,
   prepareHeaders: async (headers, { getState }) => {
     const tokens = getState().auth.tokens;
+
     if (tokens) {
       headers.set("Authorization", `Bearer ${tokens}`);
     }

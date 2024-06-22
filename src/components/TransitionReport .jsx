@@ -6,6 +6,13 @@ const styles = StyleSheet.create({
   page: {
     padding: 30,
   },
+  titleName: {
+    textAlign: "center",
+    marginBottom: 20,
+    fontSize: 25,
+    fontWeight: "bold",
+    textTransform: "uppercase",
+  },
   header: {
     textAlign: "center",
     fontSize: 20,
@@ -72,6 +79,7 @@ const TransitionReport = ({ data }) => {
     <Document>
       <Page size="A4" style={styles.page}>
         <View style={styles.section}>
+          <Text style={styles.header}>ZUGU</Text>
           <Text style={styles.header}>Transition Report</Text>
           <Text style={styles.subHeader}>Customer Info</Text>
           <Text style={styles.subHeader}>

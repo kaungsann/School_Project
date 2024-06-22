@@ -1,15 +1,10 @@
 import { Icon } from "@iconify/react";
-import { useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 
 export default function Sidebar() {
   // const location = useLocation();
 
   const { id } = useParams();
-
-  const mode = useSelector((state) => state.mode);
-
-  console.log("mode is a", mode);
 
   return (
     <>
@@ -27,7 +22,10 @@ export default function Sidebar() {
                 : "text-gray-500" // inactive class
             }`}
           >
-            <Icon icon="carbon:task" className="text-xl ml-6 " />
+            <Icon
+              icon="fluent-mdl2:product-variant"
+              className="text-xl ml-6 "
+            />
             <h3 className="font-semibold ml-4">Products</h3>
           </div>
         </Link>
