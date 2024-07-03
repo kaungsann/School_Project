@@ -7,7 +7,7 @@ export const transitionApi = createApi({
   tagTypes: ["Transition"],
   endpoints: (builder) => ({
     getTransitions: builder.query({
-      query: () => "transactions/user/2",
+      query: () => "transactions",
       providesTags: ["Transition"],
     }),
     getTransitionById: builder.query({

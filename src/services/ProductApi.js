@@ -37,16 +37,20 @@ export const productApi = createApi({
       query: (id) => `products/${id}`,
       providesTags: (result, error, id) => [{ type: "Product", id }],
     }),
+
     updateProduct: builder.mutation({
-      query: ({ id, ...updates }) => ({
-        url: `products/${id}`,
-        method: "PATCH",
-        body: updates,
-      }),
-      invalidatesTags: (result, error, arg) => [
-        { type: "Product", id: arg.id },
-      ],
+      query: ({ id, formDataToSend }) => {
+        // const { id, formDataToSend } = updates;
+        // console.log("product updated form data is a", formDataToSend);
+        return {
+          url: `products/${id}`,
+          method: "PATCH",
+          body: formDataToSend,
+        };
+      },
+      invalidatesTags: (result, error, { id }) => [{ type: "Product", id }],
     }),
+
     deleteProduct: builder.mutation({
       query: (id) => ({
         url: `products/${id}`,

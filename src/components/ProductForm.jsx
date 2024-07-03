@@ -50,38 +50,40 @@ function ProductForm({ mode }) {
 
   const readOnly = mode === "View" || mode === "Delete" || isSubmitting;
 
-  const onSubmit = (formData) => {
-    // const productData = {
-    //   ...formData,
-    //   image1: selectedPhotos.image1 || data?.image1,
-    //   image2: selectedPhotos.image2 || data?.image2,
-    // };
-
-    console.log("formDataToSend product is", formData);
+  const onSubmit = async (formData) => {
     const formDataToSend = new FormData();
-    formDataToSend.append("name", formData.name);
-    formDataToSend.append("categoryId", formData.categoryId);
-    formDataToSend.append("price", formData.price);
-    formDataToSend.append("stock", formData.stock);
-    formDataToSend.append("description", formData.description);
 
-    if (selectedPhotos.image1) {
+    formDataToSend.append("name", formData.name || "");
+    formDataToSend.append("categoryId", formData.categoryId || "");
+    formDataToSend.append("price", formData.price || 0);
+    formDataToSend.append("stock", formData.stock || 0);
+    formDataToSend.append("description", formData.description || "");
+
+    // Append images if selected and they are File objects
+    if (selectedPhotos.image1 && selectedPhotos.image1 instanceof File) {
       formDataToSend.append("image1", selectedPhotos.image1);
-    } else if (data?.image1) {
-      formDataToSend.append("image1", data.image1);
     }
 
-    if (selectedPhotos.image2) {
+    if (selectedPhotos.image2 && selectedPhotos.image2 instanceof File) {
       formDataToSend.append("image2", selectedPhotos.image2);
-    } else if (data?.image2) {
-      formDataToSend.append("image2", data.image2);
     }
 
-    console.log("formDataToSend product is", formDataToSend);
+    console.log(
+      "formDataToSend product is",
+      Array.from(formDataToSend.entries())
+    );
+
+    Array.from(formDataToSend.entries()).forEach(([key, value]) => {
+      if (value instanceof File) {
+        console.log(`${key}: File`, value);
+      } else {
+        console.log(`${key}: ${value}`);
+      }
+    });
 
     switch (mode) {
       case "Create": {
-        addProduct(formDataToSend)
+        await addProduct(formDataToSend)
           .unwrap()
           .then(() => {
             navigate("/adminpanel/products");
@@ -92,20 +94,12 @@ function ProductForm({ mode }) {
         break;
       }
       case "Edit": {
-        // updateProduct({ id, ...formDataToSend })
-        updateProduct({ id, ...Object.fromEntries(formDataToSend) })
-          .unwrap()
-          .then((response) => {
-            console.log("Update success:", response);
-            navigate("/adminpanel/products");
-          })
-          .catch((err) => {
-            console.log(err);
-          });
+        await updateProduct({ id, formDataToSend }).unwrap();
+        navigate("/adminpanel/products");
         break;
       }
       case "Delete": {
-        deleteProduct(data.id)
+        await deleteProduct(data.id)
           .unwrap()
           .then(() => {
             navigate("/adminpanel/products");
@@ -298,7 +292,7 @@ function ProductForm({ mode }) {
               rules={{ required: true }}
               defaultValue=""
               render={({ field: { onChange, value } }) => (
-                <Input
+                <Input //nextui
                   isReadOnly={readOnly}
                   type="text"
                   label="Name"
@@ -314,10 +308,10 @@ function ProductForm({ mode }) {
             />
 
             <CustomSelection
-              options={categoriesData}
+              options={categoriesData} //[caregores]
               onChange={(v) => setValue("categoryId", v)}
               isLoading={isCatLoading}
-              defaultValue={selectedCategory}
+              defaultValue={selectedCategory} // ohone and accessroes
               disabled={readOnly}
               label="Category"
             />

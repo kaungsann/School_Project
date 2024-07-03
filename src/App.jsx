@@ -29,13 +29,13 @@ export default function App() {
     { path: "/payment", element: <PaymentPage /> },
     { path: "/products", element: <ProductsPage /> },
     { path: "/product/detail/:id", element: <ProductDetailPage /> },
-    {
-      path: "/",
-      element: <PrivateRoute roles={["user"]} />,
-      children: [
-        // { path: "profile", element: <ProfilePage /> },
-      ],
-    },
+    // {
+    //   path: "/",
+    //   element: <PrivateRoute roles={["user"]} />,
+    //   children: [
+    //     // { path: "profile", element: <ProfilePage /> },
+    //   ],
+    // },
     {
       path: "/adminpanel",
       element: <PrivateRoute roles={["superuser"]} />,

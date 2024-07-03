@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useEffect, useState } from "react";
-
+//props.childern
 function CardItems({ categoryId, filterValue }) {
   const { data, isLoading, error } = useGetProductsQuery({
     categoryId: categoryId,
@@ -47,6 +47,17 @@ function CardItems({ categoryId, filterValue }) {
       />
       <div className="gap-2 grid grid-cols-2 sm:grid-cols-4 w-11/12	mx-auto relative ">
         {filteredProducts?.map((item, index) => (
+          //[CART1,CART2,CART3].map((cat) =>  {
+          //  <div key={cart.id}> sdgsjgkljg34069834906
+          //   cart.name
+          //</div>
+          //  <div key={apple}>
+          //   cart2.name
+          //</div>
+          //  <div>
+          //   cart3.name
+          //</div>
+          //  } )
           <div key={index} className="mb-12 flex flex-col mx-3 cursor-pointer">
             <div onClick={() => navigateTo(`/product/detail/${item.id}`)}>
               <img

@@ -70,8 +70,8 @@ const styles = StyleSheet.create({
 
 const TransitionReport = ({ data }) => {
   const calculateSubtotal = () => {
-    return data.purchasedProductLists.reduce((acc, item) => {
-      return acc + item.product.price * item.qty;
+    return data.purchasedProductLists.reduce((subtotal, item) => {
+      return subtotal + item.product.price * item.qty;
     }, 0);
   };
 

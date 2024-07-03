@@ -1,10 +1,10 @@
 import { Spinner } from "@nextui-org/react";
-import { useGetProductsQuery } from "../services/productApi";
+import { useGetProductsQuery } from "../services/productApi"; //GETPRODUCTS
 
 import ProductList from "../components/ProductList";
 
 function AdminProductPage() {
-  const { data, isLoading, isSuccess, isError, error } = useGetProductsQuery();
+  const { data, isLoading, isSuccess, isError, error } = useGetProductsQuery(); //RTQ QUERY
   return (
     <>
       <div className="flex justify-between"></div>

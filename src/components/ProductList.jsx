@@ -25,7 +25,7 @@ const columns = [
   { name: "NAME", uid: "name", sortable: true },
   { name: "DESCRIPTION", uid: "description", sortable: true },
   { name: "PRICE", uid: "price", sortable: true },
-  { name: "STOCK", uid: "stock" },
+  { name: "STOCK", uid: "stock", sortable: true },
   { name: "CATEGORY", uid: "category" },
   { name: "ACTIONS", uid: "actions" },
 ];

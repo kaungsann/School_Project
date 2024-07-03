@@ -21,6 +21,7 @@ const CustomSelection = ({
 
   useEffect(() => {
     if (defaultValue) {
+      //phone and acce
       setSelectedOption(defaultValue.id.toString());
     }
   }, [defaultValue]);
@@ -64,7 +65,7 @@ const CustomSelection = ({
 };
 
 CustomSelection.propTypes = {
-  options: PropTypes.array.isRequired,
+  options: PropTypes.array,
   onChange: PropTypes.func.isRequired,
   isLoading: PropTypes.bool.isRequired,
   defaultValue: PropTypes.object,

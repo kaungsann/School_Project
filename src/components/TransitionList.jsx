@@ -36,6 +36,7 @@ const INITIAL_VISIBLE_COLUMNS = [
 ];
 
 export default function TransitionList({ transitons }) {
+  console.log("transtion is a", transitons);
   const [filterValue, setFilterValue] = React.useState("");
   const [selectedKeys, setSelectedKeys] = React.useState(new Set([]));
   const [visibleColumns, setVisibleColumns] = React.useState(
@@ -217,13 +218,6 @@ export default function TransitionList({ transitons }) {
                 ))}
               </DropdownMenu>
             </Dropdown>
-            <Button
-              onClick={() => navigateTo("/adminpanel/category/create")}
-              className="bg-[#414649] text-background"
-              size="md"
-            >
-              Add New
-            </Button>
 
             <Button
               color="secondary"

@@ -1,8 +1,8 @@
 import { Icon } from "@iconify/react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 
 export default function Sidebar() {
-  // const location = useLocation();
+  const location = useLocation();
 
   const { id } = useParams();
 
